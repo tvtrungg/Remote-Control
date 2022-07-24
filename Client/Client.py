@@ -14,9 +14,9 @@ from PIL import ImageTk,Image
 from PIL import Image
 import Keystroke_Client				# KeyStroke.py
 import Registry_Client				# Registry.py
-import processRunning_Client		# processRunning.py
-import appRunning_Client			# appRunning.py
-import screenCapture_Client			# screenCapture.py
+import processRunning_Client
+import appRunning_Client
+import screenCapture_Client
 
 class GUI:
 	def __init__(self):
@@ -44,94 +44,94 @@ class GUI:
 		self.go.place(relx = 0.3,rely = 0.2)
 		self.Home.mainloop()
 		
-	def Control(self, client): # Các hộp thoại chức năng điều khiển
+	def Control(self, Client): # Các hộp thoại chức năng điều khiển
 	# Process Running
-		self.process = Button(self.login, text = "Process Running", bg = "#0d54b0", height =16, font=('Helvetica 10 bold'), command =(lambda : self.processRunning(client)), bd = 5, activebackground='#F4A460')
+		self.process = Button(self.login, text = "Process Running", bg = "#39B1C0", height =16, font=('Helvetica 10 bold'), command =(lambda : self.processRunning(Client)), bd = 5, activebackground='#1f6169')
 		self.process.place(relx = 0.02, rely = 0.35)
 	# App Running
-		self.app = Button (self.login, text ="App Running", bg = "#fee5c6",width =38,height =4, font=('Helvetica 10 bold'), command = (lambda : self.appRunning(client)), bd = 5, activebackground='#F4A460')
+		self.app = Button (self.login, text ="App Running", bg = "#8DDDE0",width =38,height =4, font=('Helvetica 10 bold'), command = (lambda : self.appRunning(Client)), bd = 5, activebackground='#497172')
 		self.app.place(relx = 0.24, rely = 0.35)
 	# Chụp màn hình
-		self.capture = Button(self.login, text ="Screen Capture",bg = "#2baf2b", width =23, height =5, font=('Helvetica 10 bold'), command = (lambda : self.screenCapture(client)), bd = 5, activebackground='#F4A460')
+		self.capture = Button(self.login, text ="Screen Capture",bg = "#E6E9D0", width =23, height =5, font=('Helvetica 10 bold'), command = (lambda : self.screenCapture(Client)), bd = 5, activebackground='#41423b')
 		self.capture.place(relx = 0.44, rely = 0.52)
 	#  Sửa registry
-		self.fix =Button(self.login, text="Edit registry",bg = "#00acee",height =3 , width =38, font=('Helvetica 10 bold'), command = (lambda : self.editRegistry(client)), bd = 5, activebackground='#F4A460')
+		self.fix =Button(self.login, text="Edit registry",bg = "#15B5B0",height =3 , width =38, font=('Helvetica 10 bold'), command = (lambda : self.editRegistry(Client)), bd = 5, activebackground='#0e726f')
 		self.fix.place(relx = 0.24, rely = 0.72)
 	# Keystroke
-		self.key = Button(self.login, text ="Keystroke",bg = "#ffcc2f", height =11, width =11,font=('Helvetica 10 bold'), command = (lambda : self.keyStroke(client)), bd = 5, activebackground='#F4A460')
-		self.key.place(relx = 0.79, rely = 0.345)
+		self.key = Button(self.login, text ="Keystroke",bg =  "#FBE698", height =11, width =11,font=('Helvetica 10 bold'), command = (lambda : self.keyStroke(Client)), bd = 5, activebackground='#776d47')
+		self.key.place(relx = 0.79, rely = 0.35)
 	# Tắt máy
-		self.shut = Button(self.login,text ="Shut Down", bg = "#c6c2c2", width =12, height =5, font=('Helvetica 10 bold'), command = (lambda : self.shutDown(client)), bd = 5, activebackground='#F4A460')
+		self.shut = Button(self.login,text ="Shut Down", bg = "#775B50", width =12, height =5, font=('Helvetica 10 bold'), command = (lambda : self.shutDown(Client)), bd = 5, activebackground='#3f302a')
 		self.shut.place(relx = 0.24, rely = 0.52)
 	# Thoát
-		self.escape = Button(self.login, text ="Exit",bg = "#ef5734",height =3, width =11,font=('Helvetica 10 bold'), command = (lambda : self.exist(client)), bd = 5, activebackground='#F4A460')
+		self.escape = Button(self.login, text ="Exit",bg = "#F9BDC0",height =3, width =11,font=('Helvetica 10 bold'), command = (lambda : self.exist(Client)), bd = 5, activebackground='#7e5a5c')
 		self.escape.place(relx = 0.79, rely = 0.72)      
 		# self.top.mainloop()
 	
 #Hàm chụp ảnh màn hình
-	def screenCapture(self, client):
+	def screenCapture(self, Client):
 		try:
-			screenCapture_Client.screenCapture(self, client)	# Đọc hàm screenCapture
+			screenCapture_Client.screenCapture(Client)	# Đọc hàm Registry
 		except:
-			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
+			messagebox.showinfo("!Warning", "Lỗi kết nối ")
 	
 # Hàm khởi động các chương trình (Watch, Kill, Start)
-	def appRunning(self, client):
+	def appRunning(self, Client):
 		try:
-			appRunning_Client.appRunning(self, client)	# Đọc hàm appRunning
+			appRunning_Client.appRunning(Client)	# Đọc hàm Registry
 		except:
-			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
+			messagebox.showinfo("!Warning", "Lỗi kết nối ")
 	
 # Hàm khởi động các process (Watch, Kill, Start)
-	def processRunning(self, client):
+	def processRunning(self, Client):
 		try:
-			processRunning_Client.processRunning(self, client)	# Đọc hàm Registry
+			processRunning_Client.processRunning(Client)	# Đọc hàm Registry
 		except:
-			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
+			messagebox.showinfo("!Warning", "Lỗi kết nối ")
 
 
 # Hàm chỉnh sửa các Registry
-	def editRegistry(self, client):
+	def editRegistry(self, Client):
 		try:
-			Registry_Client.RegistryEdit(client)	# Đọc hàm RegistryEdit
+			Registry_Client.RegistryEdit(Client)	# Đọc hàm Registry
 		except:
-			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
+			messagebox.showinfo("!Warning", "Lỗi kết nối ")
 
 
 # Hàm theo dõi bàn phím (Hoạt động như Keylogger)
-	def keyStroke(self, client):
+	def keyStroke(self, Client):
 		try:
-			Keystroke_Client.keystroke(client)		# Đọc hàm keystroke của file Keystroke_Client
+			Keystroke_Client.keystroke(Client)		# Đọc hàm keystroke của file Keystroke_Client
 		except:
-			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
+			messagebox.showinfo("!Warning", "Lỗi kết nối ")
 
 
 # Hàm Shutdown 
-	def shutDown(self, client):
+	def shutDown(self, Client):
 		try:
-			client.send(bytes("Shutdown",'utf-8'))		# Gửi thông điệp "shut down" đến server, server sẽ tự động tắt máy trong 30s
+			Client.send(bytes("Shutdown",'utf-8'))		# Gửi thông điệp "shut down" đến server, server sẽ tự động tắt máy trong 30s
 		except:
 			messagebox.showinfo(" ", "Lỗi kết nối ")	# Nếu lỗi kết nối thì thông báo lỗi
 
 # Hàm thoát	chương trình	
-	def exist(self, client):
+	def exist(self, Client):
 			try:
-				client.send(bytes("Exit", 'utf-8'))			# Gửi thông điệp để thoát khỏi chương trình 
+				Client.send(bytes("Exit", 'utf-8'))			# Gửi thông điệp để thoát khỏi chương trình 
 			except:
-				messagebox.showinfo("Error !!!", "Lỗi kết nối ")
-			client.close()								# Đóng kết nối
+				messagebox.showinfo("!Warning", "Lỗi kết nối ")
+			Client.close()								# Đóng kết nối
 			self.Home.destroy()						# Đóng cửa sổ
 
 
-# Hàm xử lý kết nối giữa server - client
+# Hàm xử lý kết nối giữa server - Client
 	def Connection_handling(self, HOST):
-		client = socket(AF_INET,SOCK_STREAM)
+		Client = socket(AF_INET,SOCK_STREAM)
 	#Kiểm tra lỗi kết nối bằng cách dùng try và except
 		try: 
-			client.connect((HOST, 1234))				# Kết nối tới server
-			client.send(bytes("Success", 'utf-8'))		# Gửi thông điệp thành công
+			Client.connect((HOST, 1234))				# Kết nối tới server
+			Client.send(bytes("Success", 'utf-8'))		# Gửi thông điệp thành công
 			messagebox.showinfo("Successful!!!", "Kết nối server thành công")		#Nếu đúng sẽ hiển thị thông báo thành công
-			rcv = Thread(target=self.Control(client))				# Sau đó gọi đến hàm Control để hiển thị các nút điều khiển
+			rcv = Thread(target=self.Control(Client))				# Sau đó gọi đến hàm Control để hiển thị các nút điều khiển
 			rcv.start()
 		except:     
 			messagebox.showinfo(" Error! ", "Không thể kết nối đến server")  # Nếu lỗi thì in ra màn hình, sau đó đóng kết nối client
