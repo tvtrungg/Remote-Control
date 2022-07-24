@@ -9,16 +9,10 @@ import Keystroke_SV, ReceiveRegistry_SV, GetValueReg_SV, SetValue_SV, DeleteRegV
 def readRequest (Client):
     request =""
     try:
-        request = Client.recv(1024).decode('utf-8')
-        # recieve request from client
+        request = Client.recv(1024).decode('utf-8')     # Nhận yêu cầu từ phía client
     finally:
         return request
 
- #ACCEPT_THREAD = Thread(target = waitingConnection())
-# Choose a port that is free
-def broadcast(msg, prefix=""):  
-    for sock in clients:
-        sock.send(bytes(prefix, "utf-8") + msg)
 
 def takeRequest (Client):
     while True:
@@ -28,23 +22,21 @@ def takeRequest (Client):
             Client.close()
             break
         print("--> Got a request\n")
+
         #Chụp màn hình rồi gửi lại cho client
-        if "TakePicture" == Request:
-            image = pyautogui.screenshot()
-            #image = image.resize((600,600)) 
-            image.save("scrshot.png")
+        if "screenCapture" == Request:
+            image = pyautogui.screenshot()              # Chụp màn hình
+            image.save("picture.png")                   # Lưu ảnh
             try:
-                # open image ======
-                myfile = open('scrshot.png', 'rb')
-                bytess = myfile.read()
-                #gửi dữ liệu cho ảnh
-                Client.sendall(bytess)
+                myfile = open("picture.png", 'rb')          # Mở file dạng byte 
+                bytess = myfile.read()                      # Đọc file
+                Client.sendall(bytess)                      # Gửi file
                 myfile.close()
             except:
-                print("Khong the chup man hinh")
+                print("Không chụp được màn hình")
+
         elif "Shutdown" == Request:
-            os.system("shutdown /s /t 30")
-            Client.send(bytes("Da tat may", "utf-8"))
+            os.system("shutdown /s /t 30")                  # Tắt máy trong vòng 30s
             print("ShutDown")
         elif "ProcessRunning" == Request:
             print("ProcessRunning")

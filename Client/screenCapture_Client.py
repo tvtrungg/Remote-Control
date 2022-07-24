@@ -15,20 +15,20 @@ def screenCapture(self, client):
 	#Hàm nhận ảnh từ server trả về
 		def ReceivePicture(): 	
 			try:
-				client.sendall(bytes("TakePicture","utf-8"))		# Gửi thông điệp "TakePicture" đến server
+				client.sendall(bytes("screenCapture","utf-8"))		# Gửi thông điệp "screenCapture" đến server
 			except:
 				messagebox.showinfo(" ", "Lỗi kết nối ")			# Nếu lỗi kết nối thì thông báo lỗi
 				self.Screenshot.destroy()							# Sau đó, đóng hộp thoại Screenshot lại
 
-			self.file = open("scrshot.png", 'wb')					# Tạo file ảnh mới
+			self.file = open("picture.png", 'wb')					# Tạo file ảnh mới
 			self.data = client.recv(40960000)						# Nhận dữ liệu từ server
 			self.file.write(self.data)								# Ghi dữ liệu vào file ảnh
-			self.img = ImageTk.PhotoImage(Image.open("scrshot.png"))	# Tạo ảnh từ file ảnh     
+			self.img = ImageTk.PhotoImage(Image.open("picture.png"))	# Tạo ảnh từ file ảnh     
 			self.canvas.create_image(0,0, anchor=NW, image=self.img)	# Vẽ ảnh lên canvas
 			self.file.close()											# Đóng file ảnh
 	#Hàm lưu ảnh
 		def SavePicture(): 
-			self.myScreenShot = open("scrshot.png",'rb')				# Tạo file ảnh mới
+			self.myScreenShot = open("picture.png",'rb')				# Tạo file ảnh mới
 			self.data = self.myScreenShot.read()						# Đọc dữ liệu từ file ảnh
 			self.fname = filedialog.asksaveasfilename(title=u'Save file', filetypes=[("PNG", ".png")])		# Đặt tên file ảnh và nhấn Save
 			self.myScreenShot.close()						# Đóng file ảnh
@@ -36,14 +36,16 @@ def screenCapture(self, client):
 			self.file = open(str(self.fname) + '.png','wb')			# Tạo file ảnh mới
 			self.file.write(self.data)								# Ghi dữ liệu vào file ảnh
 			self.file.close()										# Đóng file ảnh
-			os.remove("scrshot.png") 								# Xóa file ảnh cũ
+			os.remove("picture.png") 								# Xóa file ảnh cũ
+			self.Screenshot.destroy()								# Đóng hộp thoại Screenshot lại			
 		
 		def DontSavePicture():
-			os.remove("scrshot.png") 								# Xóa file ảnh cũ
-			self.Screenshot.destroy()								# Đóng hộp thoại Screenshot lại
+			os.remove("picture.png") 								
+			self.Screenshot.destroy()								
 	#Tạo canvas   
 		self.canvas = Canvas(self.Screenshot, bg = "white", width = 900, height = 531) 	# Tạo canvas mới   
-		self.canvas.place(relx = 0,rely = 0)    											# Vẽ ảnh chụp màn hình lên canvas
+		self.canvas.place(relx = 0,rely = 0)   		# Vẽ ảnh chụp màn hình lên canvas
+		
 	#Tạo button Chụp ảnh	
 		self.cap = Button(self.Screenshot,text="Chụp", bg = "#008080", font = "Helvetica 15 bold",width=15,height=21,borderwidth=5,command = ReceivePicture, bd = 5, activebackground='#F4A460') #Nút chụp hình
 		self.cap.place(relx=0.822, rely=0)

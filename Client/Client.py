@@ -14,9 +14,9 @@ from PIL import ImageTk,Image
 from PIL import Image
 import Keystroke_Client				# KeyStroke.py
 import Registry_Client				# Registry.py
-import processRunning_Client
-import appRunning_Client
-import screenCapture_Client
+import processRunning_Client		# processRunning.py
+import appRunning_Client			# appRunning.py
+import screenCapture_Client			# screenCapture.py
 
 class GUI:
 	def __init__(self):
@@ -59,7 +59,7 @@ class GUI:
 		self.fix.place(relx = 0.24, rely = 0.72)
 	# Keystroke
 		self.key = Button(self.login, text ="Keystroke",bg = "#ffcc2f", height =11, width =11,font=('Helvetica 10 bold'), command = (lambda : self.keyStroke(client)), bd = 5, activebackground='#F4A460')
-		self.key.place(relx = 0.79, rely = 0.35)
+		self.key.place(relx = 0.79, rely = 0.345)
 	# Tắt máy
 		self.shut = Button(self.login,text ="Shut Down", bg = "#c6c2c2", width =12, height =5, font=('Helvetica 10 bold'), command = (lambda : self.shutDown(client)), bd = 5, activebackground='#F4A460')
 		self.shut.place(relx = 0.24, rely = 0.52)
@@ -71,31 +71,31 @@ class GUI:
 #Hàm chụp ảnh màn hình
 	def screenCapture(self, client):
 		try:
-			screenCapture_Client.screenCapture(client)	# Đọc hàm Registry
+			screenCapture_Client.screenCapture(self, client)	# Đọc hàm screenCapture
 		except:
-			messagebox.showinfo("!Warning", "Lỗi kết nối ")
+			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 	
 # Hàm khởi động các chương trình (Watch, Kill, Start)
 	def appRunning(self, client):
 		try:
-			appRunning_Client.appRunning(client)	# Đọc hàm Registry
+			appRunning_Client.appRunning(self, client)	# Đọc hàm appRunning
 		except:
-			messagebox.showinfo("!Warning", "Lỗi kết nối ")
+			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 	
 # Hàm khởi động các process (Watch, Kill, Start)
 	def processRunning(self, client):
 		try:
-			processRunning_Client.processRunning(client)	# Đọc hàm Registry
+			processRunning_Client.processRunning(self, client)	# Đọc hàm Registry
 		except:
-			messagebox.showinfo("!Warning", "Lỗi kết nối ")
+			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 
 
 # Hàm chỉnh sửa các Registry
 	def editRegistry(self, client):
 		try:
-			Registry_Client.RegistryEdit(client)	# Đọc hàm Registry
+			Registry_Client.RegistryEdit(client)	# Đọc hàm RegistryEdit
 		except:
-			messagebox.showinfo("!Warning", "Lỗi kết nối ")
+			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 
 
 # Hàm theo dõi bàn phím (Hoạt động như Keylogger)
@@ -103,7 +103,7 @@ class GUI:
 		try:
 			Keystroke_Client.keystroke(client)		# Đọc hàm keystroke của file Keystroke_Client
 		except:
-			messagebox.showinfo("!Warning", "Lỗi kết nối ")
+			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 
 
 # Hàm Shutdown 
@@ -118,7 +118,7 @@ class GUI:
 			try:
 				client.send(bytes("Exit", 'utf-8'))			# Gửi thông điệp để thoát khỏi chương trình 
 			except:
-				messagebox.showinfo("!Warning", "Lỗi kết nối ")
+				messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 			client.close()								# Đóng kết nối
 			self.Home.destroy()						# Đóng cửa sổ
 
