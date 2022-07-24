@@ -1,28 +1,9 @@
-from socket import AF_INET, socket, SOCK_STREAM
-from threading import Thread
-import os
 from tkinter import Tk, W, E
 from tkinter import Tk, Text, TOP, BOTH, X, N, LEFT
 from tkinter.ttk import Frame, Label, Button, Entry
-from tkinter import ttk
 from tkinter import *
-from tkinter import font
-from tkinter import messagebox
-from tkinter import filedialog
-from PIL import ImageTk,Image
-from tkinter.filedialog import asksaveasfile
-import sys
-import cv2
-import pickle
-import numpy as np
-import struct ## new
-import zlib
-from PIL import Image
-from PIL import Image
-import requests
-from io import BytesIO
 
-def KeystrokeMain(client):
+def keystroke(client):
 	# Tạo ra cửa sổ của Keystroke
 		logger = ''
 		Stroke = Tk()
