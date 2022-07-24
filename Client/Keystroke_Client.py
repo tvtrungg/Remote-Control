@@ -12,9 +12,7 @@ def keystroke(client):
 		Stroke.configure(bg = 'white')
 		Stroke.resizable(False, False)
 
-		frame_stroke = Frame(Stroke, bg = "#FFEFDB", padx=20, pady = 25, borderwidth=5)
-		frame_stroke.grid(row=3,column=0)
-
+	
 		tab = Text(Stroke, width = 50, heigh = 15)
 		tab.grid(row = 3, column = 0, columnspan= 4)
 		HookClicked = False
@@ -27,11 +25,11 @@ def keystroke(client):
 
 		def Hookkey():
 			nonlocal HookClicked, UnhookClicked
-			if HookClicked == True: return
-			HookClicked = True
-			UnhookClicked = False
-			client.sendall(bytes("HookKey","utf-8"))
-			checkdata = client.recv(1024).decode("utf-8")
+			if HookClicked == True: return						# Nếu như nút Hook đã được nhấn thì không thực hiện gì cả
+			HookClicked = True									# Nếu như nút Hook chưa được nhấn thì thực hiện các lệnh sau
+			UnhookClicked = False								# Nút Unhook chưa được nhấn
+			client.sendall(bytes("HookKey","utf-8"))			# Gửi dữ liệu đến server
+			checkdata = client.recv(1024).decode("utf-8")		# Nhận dữ liệu từ server
 
 		def Unhookkey():
 			nonlocal logger, UnhookClicked, HookClicked
@@ -55,8 +53,8 @@ def keystroke(client):
 		def Deletekey():
 			tab.delete(1.0,END)
 					    
-		hook = Button(Stroke, text = "Hook", font = "Helvetica 10 bold",width=6, bg = "#FFDEAD", padx = 17, pady = 20, command = Hookkey).grid(row = 1,column = 0,sticky=E)
-		unhook = Button(Stroke, text = "Unhook",font = "Helvetica 10 bold",width=6 , bg = "#EECFA1", padx = 17, pady = 20, command = Unhookkey).grid(row = 1,column = 1,sticky=E) 
-		print = Button(Stroke, text = "Print",font = "Helvetica 10 bold",width=6 ,bg = "#CDB38B", padx = 17, pady = 20,command = Printkey).grid(row = 1,column = 2,sticky=E)
+		hook = Button(Stroke, text = "Hook", font = "Helvetica 10 bold",width=6, bg = "#8DDDE0", activebackground='#497172', padx = 17, pady = 20, command = Hookkey).grid(row = 1,column = 0,sticky=E)
+		unhook = Button(Stroke, text = "Unhook",font = "Helvetica 10 bold",width=6 , bg = "#F9BDC0", activebackground='#7e5a5c', padx = 17, pady = 20, command = Unhookkey).grid(row = 1,column = 1,sticky=E) 
+		print = Button(Stroke, text = "Print",font = "Helvetica 10 bold",width=6 ,bg = "#FBE698", padx = 17, pady = 20,command = Printkey).grid(row = 1,column = 2,sticky=E)
 		delete = Button(Stroke, text = "Delete", font = "Helvetica 10 bold",width=6 , bg = "#8B795E",padx = 17, pady = 25,command = Deletekey).grid(row = 1,column = 3,sticky=E)
 123456
