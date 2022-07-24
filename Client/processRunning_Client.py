@@ -114,7 +114,7 @@ def processRunning(self, client):
 
         StartButton = Button(self.StartTask, text="Start", bg="#FFE4E1", font="Helvetica 10 bold", padx=20, command=PressStart1, bd=5).grid(row=0, column=4, padx=5, pady=5)
 
-    Kill = Button(self.process, text="Kill", bg="#2E8B57", font="Helvetica 10 bold", padx=30, pady=20, command=KillWindow, bd=5, activebackground='#F4A460').grid(row=0, column=0, padx=0)
-    Watch = Button(self.process, text="Watch", bg="#54FF9F", font="Helvetica 10 bold", padx=30, pady=20, command=WatchTask, bd=5, activebackground='#F4A460').grid(row=0, column=1, padx=0)
-    Xoa = Button(self.process, text="Delete", bg="#4EEE94", font="Helvetica 10 bold", padx=30, pady=20, command=XoaTask, bd=5, activebackground='#F4A460').grid(row=0, column=2, padx=0)
-    Start = Button(self.process, text="Start", bg="#43CD80", font="Helvetica 10 bold", padx=30, pady=20, command=StartTask, bd=5, activebackground='#F4A460').grid(row=0, column=3, padx=0)
+    Kill = Button(self.process, text="Kill", bg = "#8DDDE0", activebackground='#497172', font="Helvetica 10 bold", padx=30, pady=20, command=KillWindow, bd=5).grid(row=0, column=0, padx=8)
+    Watch = Button(self.process, text="Watch", bg = "#F9BDC0", activebackground='#7e5a5c', font="Helvetica 10 bold", padx=30, pady=20, command=WatchTask, bd=5 ).grid(row=0, column=1, padx=8)
+    Xoa = Button(self.process, text="Delete", bg = "#FBE698", activebackground='#776d47', font="Helvetica 10 bold", padx=30, pady=20, command=XoaTask, bd=5 ).grid(row=0, column=2, padx=8)
+    Start = Button(self.process, text="Start", bg = "#8B795E", activebackground='#3f302a', font="Helvetica 10 bold", padx=30, pady=20, command=StartTask, bd=5).grid(row=0, column=3, padx=8)

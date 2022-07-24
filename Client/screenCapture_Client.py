@@ -47,15 +47,15 @@ def screenCapture(self, client):
 		self.canvas.place(relx = 0,rely = 0)   		# Vẽ ảnh chụp màn hình lên canvas
 		
 	#Tạo button Chụp ảnh	
-		self.cap = Button(self.Screenshot,text="Chụp", bg = "#008080", font = "Helvetica 15 bold",width=15,height=21,borderwidth=5,command = ReceivePicture, bd = 5, activebackground='#F4A460') #Nút chụp hình
+		self.cap = Button(self.Screenshot,text="Chụp", bg = "#8DDDE0", font = "Helvetica 15 bold",width=15,height=21,borderwidth=5,command = ReceivePicture, bd = 5, activebackground='#497172') #Nút chụp hình
 		self.cap.place(relx=0.822, rely=0)
 
 	#Tạo button Lưu ảnh
-		self.Save = Button(self.Screenshot, text="Lưu",bg = "#FFCC99",font = "Helvetica 15 bold",width=65,height=2,borderwidth=5,command=SavePicture, bd = 5, activebackground='#F4A460')#Nút luu ảnh
+		self.Save = Button(self.Screenshot, text="Lưu",bg = "#F9BDC0",font = "Helvetica 15 bold",width=65,height=2,borderwidth=5,command=SavePicture, bd = 5, activebackground='#7e5a5c')#Nút luu ảnh
 		self.Save.place(relx=0, rely=0.88)
 
 	#Tạo button Không lưu ảnh
-		self.DontSave = Button(self.Screenshot, text="Không Lưu",bg = "#FFCC99",font = "Helvetica 15 bold", width=24, height=2,borderwidth=5,command=DontSavePicture, bd = 5, activebackground='#F4A460')#Nút luu ảnh
+		self.DontSave = Button(self.Screenshot, text="Không Lưu",bg = "#FBE698",font = "Helvetica 15 bold", width=24, height=2,borderwidth=5,command=DontSavePicture, bd = 5, activebackground='#F4A460')#Nút luu ảnh
 		self.DontSave.place(relx= 0.725, rely = 0.88)
 		self.Screenshot.mainloop()
 		os.remove("picture.png") 

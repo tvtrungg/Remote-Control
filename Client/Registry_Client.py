@@ -22,24 +22,24 @@ def RegistryEdit(client):
             "Multi-string",
             "Expandable String"
         	]
-	Register = Tk()
-	Register.geometry("480x450")
-	Register.title("Registry")
-	Register.configure(bg = '#d7f7fc')
-	Register.resizable(False, False)
-	pathing = StringVar()
-	linking = ''
-	browser = Entry(Register,bg = "#fff5d0", width=55)
-	browser.grid(row=0, column=0, padx = 10)
-	regis = Text(Register,bg = "#fff5d0", height = 7, width = 41)
-	regis.grid(row=2, column=0, pady=10)
+	Register = Tk()										# tạo cửa sổ mới 
+	Register.geometry("480x450")						# đặt kích thước cửa sổ
+	Register.title("Registry")							# đặt tiêu đề cửa sổ
+	Register.configure(bg = '#d7f7fc')					# đặt màu nền cửa sổ
+	Register.resizable(False, False)					# không thay đổi kích thước cửa sổ
+	pathing = StringVar()								# khởi tạo biến chứa đường dẫn
+	linking = ''										# khởi tạo biến chứa đường dẫn
+	browser = Entry(Register,bg = "#fff5d0", width=55)	# khởi tạo ô nhập đường dẫn
+	browser.grid(row=0, column=0, padx = 10)			# đặt ô nhập đường dẫn
+	regis = Text(Register,bg = "#fff5d0", height = 7, width = 41)	# khởi tạo ô nhập đường dẫn
+	regis.grid(row=2, column=0, pady=10)				# đặt ô nhập đường dẫn
 
 	def Browse():
-		nonlocal pathing, linking
-		fname = filedialog.askopenfilename()
-		pathing.set(fname)
-		browser.insert(0, fname)
-		linking = browser.get()
+		nonlocal pathing, linking						# khởi tạo biến chứa đường dẫn
+		fname = filedialog.askopenfilename()			# chọn tệp tin
+		pathing.set(fname)								# đặt đường dẫn vào biến
+		browser.insert(0, fname)						# đặt đường dẫn vào ô nhập
+		linking = browser.get()							# lấy đường dẫn từ ô nhập
 		fileopen = open(linking,'r')
 		line = fileopen.read()
 		regis.insert(1.0,line)
