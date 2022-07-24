@@ -17,9 +17,9 @@ def appRunning(self, client):
 			global PORT
 			PORT = 1234
 			self.length = 0 				#Danh sách các app đang chạy
-			self.ID = [''] * 100 			#Mảng lưu ID của app
-			self.Name = [''] * 100 			#Mảng lưu tên app
-			self.Thread = [''] * 100 		#Mảng lưu luồng
+			self.ID = [''] * 1000 			#Mảng lưu ID của app
+			self.Name = [''] * 1000 			#Mảng lưu tên app
+			self.Thread = [''] * 1000 		#Mảng lưu luồng
 			try:
 				client.sendall(bytes("AppRunning","utf-8"))			# Gửi yêu cầu lấy danh sách app đang chạy
 			except:
@@ -114,7 +114,7 @@ def appRunning(self, client):
 
 			StartButton = Button(self.StartTask, text = "Start",bg = "#FFE4E1",font = "Helvetica 10 bold", padx = 20, command = PressStart, bd = 5, activebackground='#F4A460').grid(row=0, column=4, padx=5, pady=5)
 
-		Kill = Button( self.app, text = "Kill",bg = "#00FFFF",font = "Helvetica 11 bold", padx = 30,  pady = 20, command= KillWindow, bd = 5, activebackground='#F4A460').grid(row = 0, column = 0, padx = 10)
+		Kill = Button(self.app, text = "Kill",bg = "#00FFFF",font = "Helvetica 11 bold", padx = 30,  pady = 20, command= KillWindow, bd = 5, activebackground='#F4A460').grid(row = 0, column = 0, padx = 10)
 		Watch = Button(self.app, text = "Watch",bg = "#00EEEE",font = "Helvetica 11 bold", padx = 30,  pady = 20, command = WatchTask, bd = 5, activebackground='#F4A460').grid(row = 0, column = 1, padx = 10)
 		Xoa = Button(self.app, text =  "Delete",bg = "#00CDCD", font = "Helvetica 11 bold",padx = 30, pady = 20, command = XoaTask, bd = 5, activebackground='#F4A460').grid(row = 0, column = 2, padx = 10)
 		Start = Button(self.app, text="Start", bg = "#008B8B", font = "Helvetica 11 bold",padx = 30, pady = 20, command = StartTask, bd = 5, activebackground='#F4A460').grid(row = 0, column = 3, padx = 10)

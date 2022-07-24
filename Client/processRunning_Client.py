@@ -17,9 +17,9 @@ def processRunning(self, client):
         global PORT
         PORT = 1234
         self.length = 0
-        self.ID = [''] * 100000
-        self.Name = [''] * 100000
-        self.Thread = [''] * 100000
+        self.ID = [''] * 1000
+        self.Name = [''] * 1000
+        self.Thread = [''] * 1000
         try:
             client.sendall(bytes("ProcessRunning", "utf-8"))
         except:
@@ -47,8 +47,7 @@ def processRunning(self, client):
         except:
             box = messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 
-        self.frame_process = Frame(
-            self.process, bg="white", padx=20, pady=20, borderwidth=5)
+        self.frame_process = Frame(self.process, bg="white", padx=20, pady=20, borderwidth=5)
         self.frame_process.grid(row=1, columnspan=5, padx=20)
 
         self.scrollbar = Scrollbar(self.frame_process)
