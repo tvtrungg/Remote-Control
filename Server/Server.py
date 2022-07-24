@@ -25,7 +25,8 @@ def takeRequest (Client):
         #Chụp màn hình rồi gửi lại cho client
         if "screenCapture" == Request:
             image = pyautogui.screenshot()                  # Chụp màn hình
-            image.save("picture.png")                       # Lưu ảnh
+            new_image = image.resize((1080, 530))
+            new_image.save("picture.png")                       # Lưu ảnh
             try:
                 myfile = open("picture.png", 'rb')          # Mở file dạng byte 
                 bytess = myfile.read()                      # Đọc file

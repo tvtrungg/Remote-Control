@@ -115,12 +115,12 @@ class GUI:
 
 # Hàm thoát	chương trình	
 	def exist(self, Client):
-			try:
-				Client.send(bytes("Exit", 'utf-8'))			# Gửi thông điệp để thoát khỏi chương trình 
-			except:
-				messagebox.showinfo("Error !!!", "Lỗi kết nối ")
-			Client.close()								# Đóng kết nối
-			self.Home.destroy()						# Đóng cửa sổ
+		try:
+			Client.send(bytes("Exit", 'utf-8'))			# Gửi thông điệp để thoát khỏi chương trình 
+		except:
+			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
+		Client.close()							# Đóng kết nối
+		self.Home.destroy()						# Đóng cửa sổ
 
 
 # Hàm xử lý kết nối giữa server - Client
