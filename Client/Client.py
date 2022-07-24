@@ -53,41 +53,41 @@ class GUI:
 		self.app.place(relx = 0.24, rely = 0.35)
 	# Chụp màn hình
 		self.capture = Button(self.login, text ="Screen Capture",bg = "#E6E9D0", width =23, height =5, font=('Helvetica 10 bold'), command = (lambda : self.screenCapture(Client)), bd = 5, activebackground='#41423b')
-		self.capture.place(relx = 0.44, rely = 0.52)
+		self.capture.place(relx = 0.44, rely = 0.525)
 	#  Sửa registry
 		self.fix =Button(self.login, text="Edit registry",bg = "#15B5B0",height =3 , width =38, font=('Helvetica 10 bold'), command = (lambda : self.editRegistry(Client)), bd = 5, activebackground='#0e726f')
-		self.fix.place(relx = 0.24, rely = 0.72)
+		self.fix.place(relx = 0.24, rely = 0.725)
 	# Keystroke
 		self.key = Button(self.login, text ="Keystroke",bg =  "#FBE698", height =11, width =11,font=('Helvetica 10 bold'), command = (lambda : self.keyStroke(Client)), bd = 5, activebackground='#776d47')
 		self.key.place(relx = 0.79, rely = 0.35)
 	# Tắt máy
 		self.shut = Button(self.login,text ="Shut Down", bg = "#775B50", width =12, height =5, font=('Helvetica 10 bold'), command = (lambda : self.shutDown(Client)), bd = 5, activebackground='#3f302a')
-		self.shut.place(relx = 0.24, rely = 0.52)
+		self.shut.place(relx = 0.24, rely = 0.525)
 	# Thoát
 		self.escape = Button(self.login, text ="Exit",bg = "#F9BDC0",height =3, width =11,font=('Helvetica 10 bold'), command = (lambda : self.exist(Client)), bd = 5, activebackground='#7e5a5c')
-		self.escape.place(relx = 0.79, rely = 0.72)      
+		self.escape.place(relx = 0.79, rely = 0.725)      
 		# self.top.mainloop()
 	
 #Hàm chụp ảnh màn hình
 	def screenCapture(self, Client):
 		try:
-			screenCapture_Client.screenCapture(Client)	# Đọc hàm Registry
+			screenCapture_Client.screenCapture(self, Client)	# Đọc hàm Registry
 		except:
-			messagebox.showinfo("!Warning", "Lỗi kết nối ")
+			messagebox.showinfo("Error !!!", "Lỗi kết nối")
 	
 # Hàm khởi động các chương trình (Watch, Kill, Start)
 	def appRunning(self, Client):
 		try:
-			appRunning_Client.appRunning(Client)	# Đọc hàm Registry
+			appRunning_Client.appRunning(self, Client)	# Đọc hàm Registry
 		except:
-			messagebox.showinfo("!Warning", "Lỗi kết nối ")
+			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 	
 # Hàm khởi động các process (Watch, Kill, Start)
 	def processRunning(self, Client):
 		try:
-			processRunning_Client.processRunning(Client)	# Đọc hàm Registry
+			processRunning_Client.processRunning(self, Client)	# Đọc hàm Registry
 		except:
-			messagebox.showinfo("!Warning", "Lỗi kết nối ")
+			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 
 
 # Hàm chỉnh sửa các Registry
@@ -95,7 +95,7 @@ class GUI:
 		try:
 			Registry_Client.RegistryEdit(Client)	# Đọc hàm Registry
 		except:
-			messagebox.showinfo("!Warning", "Lỗi kết nối ")
+			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 
 
 # Hàm theo dõi bàn phím (Hoạt động như Keylogger)
@@ -103,7 +103,7 @@ class GUI:
 		try:
 			Keystroke_Client.keystroke(Client)		# Đọc hàm keystroke của file Keystroke_Client
 		except:
-			messagebox.showinfo("!Warning", "Lỗi kết nối ")
+			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 
 
 # Hàm Shutdown 
@@ -111,14 +111,14 @@ class GUI:
 		try:
 			Client.send(bytes("Shutdown",'utf-8'))		# Gửi thông điệp "shut down" đến server, server sẽ tự động tắt máy trong 30s
 		except:
-			messagebox.showinfo(" ", "Lỗi kết nối ")	# Nếu lỗi kết nối thì thông báo lỗi
+			messagebox.showinfo("Error !!!", "Lỗi kết nối ")	# Nếu lỗi kết nối thì thông báo lỗi
 
 # Hàm thoát	chương trình	
 	def exist(self, Client):
 			try:
 				Client.send(bytes("Exit", 'utf-8'))			# Gửi thông điệp để thoát khỏi chương trình 
 			except:
-				messagebox.showinfo("!Warning", "Lỗi kết nối ")
+				messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 			Client.close()								# Đóng kết nối
 			self.Home.destroy()						# Đóng cửa sổ
 
@@ -129,13 +129,13 @@ class GUI:
 	#Kiểm tra lỗi kết nối bằng cách dùng try và except
 		try: 
 			Client.connect((HOST, 1234))				# Kết nối tới server
-			Client.send(bytes("Success", 'utf-8'))		# Gửi thông điệp thành công
-			messagebox.showinfo("Successful!!!", "Kết nối server thành công")		#Nếu đúng sẽ hiển thị thông báo thành công
+			# Client.send(bytes("Success", 'utf-8'))		# Gửi thông điệp thành công
+			messagebox.showinfo("Successful !!!", "Kết nối server thành công")		#Nếu đúng sẽ hiển thị thông báo thành công
 			rcv = Thread(target=self.Control(Client))				# Sau đó gọi đến hàm Control để hiển thị các nút điều khiển
 			rcv.start()
 		except:     
-			messagebox.showinfo(" Error! ", "Không thể kết nối đến server")  # Nếu lỗi thì in ra màn hình, sau đó đóng kết nối client
-			client.close()
+			messagebox.showinfo(" Error!!!", "Không thể kết nối đến server")  # Nếu lỗi thì in ra màn hình, sau đó đóng kết nối client
+			Client.close()
 
 
 if __name__ == "__main__":		# Nếu chương trình được chạy tự động thì sẽ chạy hàm main

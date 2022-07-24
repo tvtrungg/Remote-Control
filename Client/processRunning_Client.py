@@ -6,8 +6,8 @@ from tkinter import messagebox
 
 def processRunning(self, client):
     self.process = Tk()
-    self.process.configure(bg="#FFFAF0")
     self.process.title("Process Running")
+    self.process.configure(bg="#FFFAF0")
 
     def XoaTask():
         self.frame_process.destroy()
@@ -23,7 +23,7 @@ def processRunning(self, client):
         try:
             client.sendall(bytes("ProcessRunning", "utf-8"))
         except:
-            messagebox.showinfo("!Warning", "Lỗi kết nối ")
+            messagebox.showinfo("Error !!!", "Lỗi kết nối ")
             self.process.destroy()
 
         # Receive data
@@ -45,12 +45,11 @@ def processRunning(self, client):
                 self.Thread[i] = self.data
                 client.sendall(bytes(self.data, "utf-8"))
         except:
-            box = messagebox.showinfo("!Warning", "Lỗi kết nối ")
+            box = messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 
         self.frame_process = Frame(
             self.process, bg="white", padx=20, pady=20, borderwidth=5)
         self.frame_process.grid(row=1, columnspan=5, padx=20)
-        # from tkinter import ttk
 
         self.scrollbar = Scrollbar(self.frame_process)
         self.scrollbar.pack(side=RIGHT, fill=Y)
@@ -89,7 +88,7 @@ def processRunning(self, client):
                 self.checkdata = client.recv(1024).decode("utf-8")
                 messagebox.showinfo("", "Đã đóng chương trình")
             except:
-                messagebox.showinfo("", "Không tìm thấy chương trình")
+                messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")
 
         KillButton = Button(self.KillTask, bg="#FFE4E1", text="Kill", font="Helvetica 10 bold", padx=20,
                             command=PressKill1, bd=5, activebackground='#F4A460').grid(row=0, column=4, padx=5, pady=5)
@@ -111,16 +110,11 @@ def processRunning(self, client):
                 self.checkdata = client.recv(1024).decode("utf-8")
                 messagebox.showinfo("", "Chương trình đã bật")
             except:
-                messagebox.showinfo("", "Không tìm thấy chương trình")
+                messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")
 
-        StartButton = Button(self.StartTask, text="Start", bg="#FFE4E1", font="Helvetica 10 bold",
-                             padx=20, command=PressStart1).grid(row=0, column=4, padx=5, pady=5)
+        StartButton = Button(self.StartTask, text="Start", bg="#FFE4E1", font="Helvetica 10 bold", padx=20, command=PressStart1, bd=5).grid(row=0, column=4, padx=5, pady=5)
 
-    Kill = Button(self.process, text="Kill", bg="#2E8B57", font="Helvetica 10 bold", padx=30,
-                  pady=20, command=KillWindow, bd=5, activebackground='#F4A460').grid(row=0, column=0, padx=0)
-    Watch = Button(self.process, text="Watch", bg="#54FF9F", font="Helvetica 10 bold",  padx=30,
-                   pady=20, command=WatchTask, bd=5, activebackground='#F4A460').grid(row=0, column=1, padx=0)
-    Xoa = Button(self.process, text="Delete", bg="#4EEE94", font="Helvetica 10 bold", padx=30,
-                 pady=20, command=XoaTask, bd=5, activebackground='#F4A460').grid(row=0, column=2, padx=0)
-    Start = Button(self.process, text="Start", bg="#43CD80", font="Helvetica 10 bold", padx=30,
-                   pady=20, command=StartTask, bd=5, activebackground='#F4A460').grid(row=0, column=3, padx=0)
+    Kill = Button(self.process, text="Kill", bg="#2E8B57", font="Helvetica 10 bold", padx=30, pady=20, command=KillWindow, bd=5, activebackground='#F4A460').grid(row=0, column=0, padx=0)
+    Watch = Button(self.process, text="Watch", bg="#54FF9F", font="Helvetica 10 bold", padx=30, pady=20, command=WatchTask, bd=5, activebackground='#F4A460').grid(row=0, column=1, padx=0)
+    Xoa = Button(self.process, text="Delete", bg="#4EEE94", font="Helvetica 10 bold", padx=30, pady=20, command=XoaTask, bd=5, activebackground='#F4A460').grid(row=0, column=2, padx=0)
+    Start = Button(self.process, text="Start", bg="#43CD80", font="Helvetica 10 bold", padx=30, pady=20, command=StartTask, bd=5, activebackground='#F4A460').grid(row=0, column=3, padx=0)

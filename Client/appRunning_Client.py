@@ -23,7 +23,7 @@ def appRunning(self, client):
 			try:
 				client.sendall(bytes("AppRunning","utf-8"))			# Gửi yêu cầu lấy danh sách app đang chạy
 			except:
-				messagebox.showinfo("Warning!", "Lỗi kết nối ")		# Thông báo lỗi kết nối
+				messagebox.showinfo("Error !!!", "Lỗi kết nối")		# Thông báo lỗi kết nối
 				self.app.destroy()									# Đóng app
 
 			#Receive data
@@ -45,11 +45,10 @@ def appRunning(self, client):
 					self.Thread[i] = self.data
 					client.sendall(bytes(self.data,"utf-8"))
 			except:
-				box = messagebox.showinfo("!Warning", "Lỗi kết nối ")
+				box = messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 
 			self.frame_app = Frame(self.app, bg = "white", padx=20, pady = 20, borderwidth=5)
 			self.frame_app.grid(row=1,columnspan=5,padx=20)
-			# from tkinter import ttk
 
 			self.scrollbar = Scrollbar(self.frame_app)
 			self.scrollbar.pack(side=RIGHT,fill=Y)
@@ -85,9 +84,9 @@ def appRunning(self, client):
 					if (self.checkdata == "Da xoa tac vu"):
 						messagebox.showinfo("", "Đã đóng chương trình")
 					else:
-						messagebox.showinfo("", "Không tìm thấy chương trình")
+						messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")
 				except:
-					messagebox.showinfo("", "Không tìm thấy chương trình")
+					messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")
 
 			KillButton = Button(self.KillTask, text = "Kill", bg = "#FFE4E1",font = "Helvetica 10 bold",padx = 20, command = PressKill, bd = 5, activebackground='#F4A460').grid(row=0, column=4, padx=5, pady=5)
 
@@ -111,7 +110,7 @@ def appRunning(self, client):
 					else:
 						messagebox.showinfo("", "Không tìm thấy chương trình")
 				except:
-					messagebox.showinfo("", "Không tìm thấy chương trình")
+					messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")
 
 			StartButton = Button(self.StartTask, text = "Start",bg = "#FFE4E1",font = "Helvetica 10 bold", padx = 20, command = PressStart, bd = 5, activebackground='#F4A460').grid(row=0, column=4, padx=5, pady=5)
 
