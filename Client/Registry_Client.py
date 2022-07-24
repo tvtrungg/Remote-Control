@@ -25,12 +25,13 @@ def RegistryEdit(client):
 	Register = Tk()
 	Register.geometry("480x450")
 	Register.title("Registry")
-	Register.configure(bg = '#8B6969')
+	Register.configure(bg = '#d7f7fc')
+	Register.resizable(False, False)
 	pathing = StringVar()
 	linking = ''
-	browser = Entry(Register,bg = "#8B658B", width=55)
+	browser = Entry(Register,bg = "#fff5d0", width=55)
 	browser.grid(row=0, column=0, padx = 10)
-	regis = Text(Register,bg = "#8B658B", height = 7, width = 41)
+	regis = Text(Register,bg = "#fff5d0", height = 7, width = 41)
 	regis.grid(row=2, column=0, pady=10)
 
 	def Browse():
@@ -42,7 +43,7 @@ def RegistryEdit(client):
 		fileopen = open(linking,'r')
 		line = fileopen.read()
 		regis.insert(1.0,line)
-	ButtonBrowse = Button(Register, text="Browser", font = "Helvetica 10 bold",bg = "#EEB4B4", activebackground='#F4A460',command=Browse, padx = 28)
+	ButtonBrowse = Button(Register, text="Browser", font = "Helvetica 10 bold",bg = "#f8dddf", activebackground='#be9d9f',command=Browse, padx = 28)
 	ButtonBrowse.grid(row=0, column=1, padx = 10)
 
 	def RegContent():
@@ -52,7 +53,7 @@ def RegistryEdit(client):
 		line = regis.get(1.0,END)
 		client.sendall(bytes(line,"utf-8"))
 		checkdata = client.recv(1024).decode("utf-8")
-	ContentButton = Button(Register, text="Gửi nội dung", font = "Helvetica 10 bold",bg = "#EEB4B4",activebackground='#F4A460',height = 4, command = RegContent, padx = 15, pady = 28)
+	ContentButton = Button(Register, text="Gửi nội dung", font = "Helvetica 10 bold",bg = "#f8dddf",activebackground='#be9d9f',height = 4, command = RegContent, padx = 15, pady = 28)
 	ContentButton.grid(row=2, column=1, padx = 10)
 
 	SecondFrame = LabelFrame(Register, text="Sửa giá trị trực tiếp")
@@ -214,9 +215,9 @@ def RegistryEdit(client):
 		for widget in Lenh.winfo_children(): widget.destroy()
 
 	BelowButton = Frame(SecondFrame)
-	send = Button(BelowButton, text="Gửi",activebackground='#8B7D7B',font = "Helvetica 10 bold",bg = "#BC8F8F", command = ButtonGui)
+	send = Button(BelowButton, text="Gửi",activebackground='#5f7575',font = "Helvetica 10 bold",bg = "#aad0d1", command = ButtonGui)
 	send.grid(row=0, column=0, ipadx = 35)
-	delete = Button(BelowButton, text="Xoá",activebackground='#8B7D7B',font = "Helvetica 10 bold",bg = "#BC8F8F", command = ButtonXoa)
+	delete = Button(BelowButton, text="Xoá",activebackground='#5f7575',font = "Helvetica 10 bold",bg = "#aad0d1", command = ButtonXoa)
 	delete.grid(row=0, column=1, ipadx = 35)
 	BelowButton.grid(sticky=S)
 	Register.mainloop()

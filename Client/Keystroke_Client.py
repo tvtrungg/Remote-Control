@@ -8,8 +8,9 @@ def keystroke(client):
 		logger = ''
 		Stroke = Tk()
 		Stroke.title("Keystroke")  
-		Stroke.geometry("410x320")
+		Stroke.geometry("425x320")
 		Stroke.configure(bg = 'white')
+		Stroke.resizable(False, False)
 		frame_stroke = Frame(Stroke, bg = "#FFEFDB", padx=20, pady = 20, borderwidth=5)
 		frame_stroke.grid(row=1,column=0)
 		tab = Text(Stroke, width = 50, heigh = 15)
@@ -53,7 +54,7 @@ def keystroke(client):
 		def Deletekey():
 			tab.delete(1.0,END)
 					    
-		hook = Button(Stroke, text = "Hook", font = "Helvetica 10 bold",bg = "#FFDEAD", padx = 27, pady = 24, command = Hookkey).grid(row = 2,column = 0,sticky=E)
-		unhook = Button(Stroke, text = "Unhook",font = "Helvetica 10 bold", bg = "#EECFA1", padx = 27, pady = 24, command = Unhookkey).grid(row = 2,column = 1,sticky=E) 
-		prs = Button(Stroke, text = "In phím",font = "Helvetica 10 bold",bg = "#CDB38B", padx = 27, pady = 24,command = Printkey).grid(row = 2,column = 2,sticky=E)
-		delete = Button(Stroke, text = "Delete", font = "Helvetica 10 bold", bg = "#8B795E",padx = 27, pady = 24,command = Deletekey).grid(row = 2,column = 3,sticky=E)
+		hook = Button(Stroke, text = "Hook", font = "Helvetica 10 bold",bg = "#8DDDE0", activebackground='#497172', padx = 27, pady = 24, command = Hookkey).grid(row = 2,column = 0,sticky=E)
+		unhook = Button(Stroke, text = "Unhook",font = "Helvetica 10 bold", bg = "#F9BDC0", activebackground='#7e5a5c', padx = 27, pady = 24, command = Unhookkey).grid(row = 2,column = 1,sticky=E) 
+		prs = Button(Stroke, text = "In phím",font = "Helvetica 10 bold",bg = "#FBE698", activebackground='#776d47', padx = 27, pady = 24,command = Printkey).grid(row = 2,column = 2,sticky=E)
+		delete = Button(Stroke, text = "Delete", font = "Helvetica 10 bold", bg = "#775B50", activebackground='#3f302a',padx = 27, pady = 24,command = Deletekey).grid(row = 2,column = 3,sticky=E)
