@@ -17,16 +17,15 @@ def readRequest (Client):
 def takeRequest (Client):
     while True:
         Request = readRequest(Client)
-        print(Request)
+        print("====> Yêu cầu từ server: ", Request)
         if not Request:
             Client.close()
             break
-        print("--> Got a request\n")
 
         #Chụp màn hình rồi gửi lại cho client
         if "screenCapture" == Request:
-            image = pyautogui.screenshot()              # Chụp màn hình
-            image.save("picture.png")                   # Lưu ảnh
+            image = pyautogui.screenshot()                  # Chụp màn hình
+            image.save("picture.png")                       # Lưu ảnh
             try:
                 myfile = open("picture.png", 'rb')          # Mở file dạng byte 
                 bytess = myfile.read()                      # Đọc file
@@ -40,34 +39,15 @@ def takeRequest (Client):
             print("ShutDown")
         elif "ProcessRunning" == Request:
             print("ProcessRunning")
-            '''c=0
-            Name = ['' for i in range(100000)]
-            ID = ['' for i in range(100000)]
-            Thread = ['' for i in range(100000)]
-            for process in psutil.process_iter ():
-                c = c+1
-                Name[c] = str(process.name ())
-                ID[c] = str(process.pid)
-                Thread[c] = str(process.num_threads())
-
-            Client.sendall(bytes(str(c), "utf-8"))
-            for i in range(c):
-                Client.sendall(bytes(ID[i],"utf-8"))
-                checkdata = Client.recv(1024)
-            for i in range(c):
-                Client.sendall(bytes(Name[i], "utf-8"))
-                checkdata = Client.recv(1024)
-            for i in range(c):
-                Client.sendall(bytes(Thread[i], "utf-8"))
-                checkdata = Client.recv(1024)'''
+           
             import subprocess
             cmd = 'powershell "Get-Process |Select-Object id, name, @{Name=\'ThreadCount\';Expression ={$_.Threads.Count}}| format-table'
             ProccessProc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
             count = 0
             length = 0
-            Name = ['' for i in range(100000)]
-            ID = ['' for i in range(100000)]
-            Thread = ['' for i in range(100000)]
+            Name = ['' for i in range(10000)]
+            ID = ['' for i in range(10000)]
+            Thread = ['' for i in range(10000)]
             for line in ProccessProc.stdout:
                 if line.rstrip():
                     if count < 2:
@@ -169,22 +149,21 @@ def takeRequest (Client):
         elif "Exit" == Request:
             print("Exit")
             Client.sendall(bytes("Đã thoát", "utf-8"))
-            # server.close()
             break
 
 def waitingConnection():
 
-    print("Waiting for Client")
+    print("Chờ các kết nối từ client...")
     
     while True:
         client, Address = SERVER.accept()
-        print("Client", Address, "connected!")
+        print("Client", Address, "---> Đã kết nối !!!")
         Thread(target = takeRequest, args = (client,)).start()
 
 
 SERVER =socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 SERVER.bind((socket.gethostbyname(socket.gethostname()), 1234))
-print("server is working on ", (socket.gethostbyname(socket.gethostname())))
+print("Server đang chạy: ", (socket.gethostbyname(socket.gethostname())))
 def action():
     try:
         SERVER.listen()
@@ -194,11 +173,11 @@ def action():
     except:
         print("Error occured!")
     finally:
-
         SERVER.close()
+
 def main():
      top = Tk()
-     top.title("Server")
+     top.title("Server Connection")
      top.geometry("150x150")
      top.button = Button(top, text ="Mở Server",font=('Arial Bold', 13), command = action, bd = 10, bg='#c4ceff', activebackground='#8fa2ff' )
      top.button.pack(fill=BOTH, pady=5, padx=5, expand=True)

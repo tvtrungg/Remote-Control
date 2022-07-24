@@ -10,18 +10,17 @@ def screenCapture(self, client):
 		self.Screenshot = Toplevel()					# Tạo 1 hộp thoại mới
 		self.Screenshot.title("ScreenShot")			# Đặt tiêu đề cho hộp thoại
 		self.Screenshot.resizable(width = False,height = False)
-		self.Screenshot.configure(bg = "#C0C0C0")		# Đặt màu nền cho hộp thoại
-		self.Screenshot.configure(width = 1100, height = 610)
+		self.Screenshot.configure(bg = "#C0C0C0", width = 1100, height = 610)		# Đặt màu nền cho hộp thoại
 	#Hàm nhận ảnh từ server trả về
 		def ReceivePicture(): 	
 			try:
 				client.sendall(bytes("screenCapture","utf-8"))		# Gửi thông điệp "screenCapture" đến server
 			except:
-				messagebox.showinfo(" ", "Lỗi kết nối ")			# Nếu lỗi kết nối thì thông báo lỗi
+				messagebox.showinfo("Error !!!", "Lỗi kết nối")			# Nếu lỗi kết nối thì thông báo lỗi
 				self.Screenshot.destroy()							# Sau đó, đóng hộp thoại Screenshot lại
 
 			self.file = open("picture.png", 'wb')					# Tạo file ảnh mới
-			self.data = client.recv(40960000)						# Nhận dữ liệu từ server
+			self.data = client.recv(2016062)						# Nhận dữ liệu từ server
 			self.file.write(self.data)								# Ghi dữ liệu vào file ảnh
 			self.img = ImageTk.PhotoImage(Image.open("picture.png"))	# Tạo ảnh từ file ảnh     
 			self.canvas.create_image(0,0, anchor=NW, image=self.img)	# Vẽ ảnh lên canvas
@@ -41,7 +40,8 @@ def screenCapture(self, client):
 		
 		def DontSavePicture():
 			os.remove("picture.png") 								
-			self.Screenshot.destroy()								
+			self.Screenshot.destroy()			
+
 	#Tạo canvas   
 		self.canvas = Canvas(self.Screenshot, bg = "white", width = 900, height = 531) 	# Tạo canvas mới   
 		self.canvas.place(relx = 0,rely = 0)   		# Vẽ ảnh chụp màn hình lên canvas
@@ -58,3 +58,6 @@ def screenCapture(self, client):
 		self.DontSave = Button(self.Screenshot, text="Không Lưu",bg = "#FFCC99",font = "Helvetica 15 bold", width=24, height=2,borderwidth=5,command=DontSavePicture, bd = 5, activebackground='#F4A460')#Nút luu ảnh
 		self.DontSave.place(relx= 0.725, rely = 0.88)
 		self.Screenshot.mainloop()
+		os.remove("picture.png") 
+
+
