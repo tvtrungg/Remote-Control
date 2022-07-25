@@ -4,7 +4,7 @@ from tkinter import ttk
 from tkinter import *
 from tkinter import messagebox
 
-def processRunning(self, client):
+def process_function(self, client):
     self.process = Tk()
     self.process.title("Process Running")       # Tựa đề của cửa sổ
     self.process.configure(bg="#FFFAF0")        # Màu nền
@@ -112,5 +112,5 @@ def processRunning(self, client):
 
     Kill = Button(self.process, text="Kill", bg = "#8DDDE0", activebackground='#497172', font="Helvetica 10 bold", padx=30, pady=20, command=KillProcess, bd=5).grid(row=0, column=0, padx=8)
     Watch = Button(self.process, text="Watch", bg = "#F9BDC0", activebackground='#7e5a5c', font="Helvetica 10 bold", padx=30, pady=20, command=WatchTask, bd=5 ).grid(row=0, column=1, padx=8)
-    Xoa = Button(self.process, text="Delete", bg = "#FBE698", activebackground='#776d47', font="Helvetica 10 bold", padx=30, pady=20, command=Clear, bd=5 ).grid(row=0, column=2, padx=8)
+    Delete = Button(self.process, text="Delete", bg = "#FBE698", activebackground='#776d47', font="Helvetica 10 bold", padx=30, pady=20, command=Clear, bd=5 ).grid(row=0, column=2, padx=8)
     Start = Button(self.process, text="Start", bg = "#E6E9D0", activebackground='#bec0b1', font="Helvetica 10 bold", padx=30, pady=20, command=StartTask, bd=5).grid(row=0, column=3, padx=8)

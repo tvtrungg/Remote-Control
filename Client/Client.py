@@ -10,8 +10,8 @@ from tkinter import messagebox
 from PIL import ImageTk,Image
 from PIL import Image
 import Keystroke_Client				# KeyStroke.py
-import processRunning_Client		# processRunning.py
-import appRunning_Client			# appRunning.py
+import processRunning_Client		# process_function.py
+import appRunning_Client			# application_function.py
 import screenCapture_Client			# screenCapture.py
 
 class GUI:
@@ -29,6 +29,7 @@ class GUI:
 		self.background= PhotoImage(file='./img/button/background.png')
 		self.mylabel = Label(self.login, image=self.background)
 		self.mylabel.place(x=0, y=0, relwidth=1, relheight=1)
+		
 	# Tạo label
 		self.labelIP = Label(self.login, text = "Nhập địa chỉ IP để tiếp tục:", compound="center",bg ="#FFFEEC",font = "Helvetica 15 bold")
 		self.labelIP.place(relx = 0.05,rely = 0.05)
@@ -36,19 +37,19 @@ class GUI:
 		self.input_IP = Entry(self.login, textvariable = StringVar(), bg ="#FFF0F5", font = "Helvetica 14")
 		self.input_IP.place(relx = 0.501,rely = 0.05)
 	# Tạo nút nhấn, khi nhấn nút =>  dữ liệu sẽ được gửi đến server thông qua socket
-		self.connect = Button(self.login,text = "Kết nối", width =18 ,bg = "#A3E4DB",font = "Helvetica 14 bold",command = (lambda : self.Connection_handling(self.input_IP.get())), bd = 5, activebackground='#F4A460')
-		self.connect.place(relx = 0.3,rely = 0.2)		# Tọa độ x, y của nút nhấn
+		self.connect = Button(self.login,text = "Kết nối", width =20 ,bg = "#A3E4DB",font = "Helvetica 15 bold",command = (lambda : self.Connection_handling(self.input_IP.get())), bd = 5, activebackground='#F4A460')
+		self.connect.place(relx = 0.3,rely = 0.18)		# Tọa độ x, y của nút nhấn
 
 		self.Home.mainloop()							# Chạy hệ thống
 		
 	def Controller(self, Client): # Các hộp thoại chức năng điều khiển
 	# Process Running
 		self.btn1= PhotoImage(file='./img/button/1.png')                      # Đặt hình ảnh
-		self.process = Button(self.login, image = self.btn1, command =(lambda : self.processRunning(Client)), bd = 0, bg= "#fff")
+		self.process = Button(self.login, image = self.btn1, command =(lambda : self.process_function(Client)), bd = 0, bg= "#fff")
 		self.process.place(relx = 0.05, rely = 0.4)
 	# App Running
 		self.btn2= PhotoImage(file='./img/button/2.png')                      # Đặt hình ảnh
-		self.app = Button (self.login, image=self.btn2, command = (lambda : self.appRunning(Client)), bd = 0, bg = "#fff")
+		self.app = Button (self.login, image=self.btn2, command = (lambda : self.application_function(Client)), bd = 0, bg = "#fff")
 		self.app.place(relx = 0.240, rely = 0.4)
 	# Chụp màn hình
 		self.btn3= PhotoImage(file='./img/button/3.png')                      # Đặt hình ảnh
@@ -75,23 +76,23 @@ class GUI:
 			messagebox.showinfo("Error !!!", "Lỗi kết nối")		# Thông báo lỗi nếu hàm lỗi
 	
 # Hàm khởi động các chương trình (Watch, Kill, Start)
-	def appRunning(self, Client):
+	def application_function(self, Client):
 		try:
-			appRunning_Client.appRunning(self, Client)	# Đọc hàm appRunning
+			appRunning_Client.application_function(self, Client)	# Đọc hàm application_function
 		except:
 			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 	
 # Hàm khởi động các process (Watch, Kill, Start)
-	def processRunning(self, Client):
+	def process_function(self, Client):
 		try:
-			processRunning_Client.processRunning(self, Client)	# Đọc hàm processRunning
+			processRunning_Client.process_function(self, Client)	# Đọc hàm process_function
 		except:
 			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 
 # Hàm theo dõi bàn phím (Hoạt động như Keylogger)
 	def keyStroke(self, Client):
 		try:
-			Keystroke_Client.keystroke(Client)		# Đọc hàm keystroke của file Keystroke_Client
+			Keystroke_Client.keystroke(Client)		# Đọc hàm keystroke của file Keystroke_Client.py
 		except:
 			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 

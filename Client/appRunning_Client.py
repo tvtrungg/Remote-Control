@@ -4,7 +4,7 @@ from tkinter import ttk
 from tkinter import *
 from tkinter import messagebox
 
-def appRunning(self, client):				# appRunning_Client.py
+def application_function(self, client):				# appRunning_Client.py
 		self.app = Tk()						# Tạo hộp thoại
 		self.app.title("App Running")		# Tạo tiêu đề
 		self.app.configure (bg = "white")	# Tạo màu nền
@@ -116,5 +116,5 @@ def appRunning(self, client):				# appRunning_Client.py
 
 		Kill = Button( self.app, text = "Kill",bg = "#8DDDE0", activebackground='#497172',font = "Helvetica 11 bold", padx = 30,  pady = 20, command= KillWindow, bd = 5).grid(row = 0, column = 0, padx = 8)
 		Watch = Button(self.app, text = "Watch",bg = "#F9BDC0", activebackground='#7e5a5c',font = "Helvetica 11 bold", padx = 30,  pady = 20, command = WatchTask, bd = 5).grid(row = 0, column = 1, padx = 8)
-		Xoa = Button(self.app, text =  "Delete",bg = "#FBE698", activebackground='#776d47', font = "Helvetica 11 bold",padx = 30, pady = 20, command = Clear, bd = 5).grid(row = 0, column = 2, padx = 8)
+		Delete = Button(self.app, text =  "Delete",bg = "#FBE698", activebackground='#776d47', font = "Helvetica 11 bold",padx = 30, pady = 20, command = Clear, bd = 5).grid(row = 0, column = 2, padx = 8)
 		Start = Button(self.app, text="Start", bg = "#E6E9D0", activebackground='#bec0b1', font = "Helvetica 11 bold",padx = 30, pady = 20, command = StartTask, bd = 5).grid(row = 0, column = 3, padx = 8)
