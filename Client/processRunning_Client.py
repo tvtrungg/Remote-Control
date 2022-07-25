@@ -63,13 +63,13 @@ def processRunning(self, client):
 
         self.mybar.heading("#0", text="Process Name", anchor=W)                                 # Đặt tiêu đề cột #0
         self.mybar.heading("1", text="ID", anchor=CENTER)                                       # Đặt tiêu đề cột 1
-        self.mybar.heading("2", text="Counting threading", anchor=CENTER)                       # Đặt tiêu đề cột 2
+        self.mybar.heading("2", text="Thread", anchor=CENTER)                       # Đặt tiêu đề cột 2
         for i in range(self.length):
             self.mybar.insert(parent='', index='end', iid=0+i, text=self.Name[i], values=(self.ID[i], self.Thread[i]))                      # Đặt dữ liệu cột 1
 
     def KillProcess():
         self.screen_KillTask = Tk()                     # Khai báo cửa sổ
-        self.screen_KillTask.geometry("300x50")         # Đặt kích thước cửa sổ
+        self.screen_KillTask.geometry("320x50")         # Đặt kích thước cửa sổ
         self.screen_KillTask.title("Kill")              # Đặt tiêu đề cửa sổ
 
         self.EnterName = Entry(self.screen_KillTask, width=35)          # Khai báo Entry

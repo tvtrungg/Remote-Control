@@ -8,8 +8,8 @@ def appRunning(self, client):				# appRunning_Client.py
 		self.app = Tk()						# Tạo hộp thoại
 		self.app.title("App Running")		# Tạo tiêu đề
 		self.app.configure (bg = "white")	# Tạo màu nền
-	# Hàm xóa tác vụ						# Tạo hàm xóa tác vụ
-		def Clear():						# Tạo hàm xóa tác vụ
+	# Hàm xóa tác vụ						
+		def Clear():						
 			self.frame_app.destroy()		# Xóa frame_app
 	# Hiển thị các tác vụ
 		def WatchTask():
@@ -69,7 +69,7 @@ def appRunning(self, client):				# appRunning_Client.py
 
 		def KillWindow():
 			self.KillTask = Tk()				# Tạo một cửa sổ mới
-			self.KillTask.geometry("300x50")	# Thiết lập kích thước cửa sổ
+			self.KillTask.geometry("320x50")	# Thiết lập kích thước cửa sổ
 			self.KillTask.title("Kill")			# Thiết lập tiêu đề của cửa sổ
 			self.EnterName = Entry(self.KillTask, width = 35)		# Tạo một ô nhập vào
 			self.EnterName.grid(row=0, column=0, columnspan = 3, padx = 5, pady = 5 )		# Thêm ô nhập vào vào cửa sổ

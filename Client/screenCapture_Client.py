@@ -37,23 +37,20 @@ def screenCapture(self, client):
 			self.file.close()										# Đóng file ảnh
 			os.remove("picture.png") 								# Xóa file ảnh cũ
 			self.Screenshot.destroy()								# Đóng hộp thoại Screenshot lại			
-		
+	#Hàm không lưu ảnh
 		def DontSavePicture():
 			os.remove("picture.png") 								
 			self.Screenshot.destroy()			
 
-	#Tạo canvas   
+	#Tạo canvas chứa ảnh đã chụp
 		self.canvas = Canvas(self.Screenshot, bg = "white", width = 1084, height = 531) 	# Tạo canvas mới   
 		self.canvas.place(relx = 0,rely = 0)   		# Vẽ ảnh chụp màn hình lên canvas
-		
 	#Tạo button Chụp ảnh	
 		self.cap = Button(self.Screenshot,text="Chụp", bg = "#8DDDE0", font = "Helvetica 15 bold",width=40,height=2,borderwidth=5,command = ReceivePicture, bd = 5, activebackground='#497172') #Nút chụp hình
 		self.cap.place(relx=0, rely=0.88)
-
 	#Tạo button Lưu ảnh
 		self.Save = Button(self.Screenshot, text="Lưu",bg = "#F9BDC0",font = "Helvetica 15 bold",width=26,height=2,borderwidth=5,command=SavePicture, bd = 5, activebackground='#7e5a5c')#Nút luu ảnh
 		self.Save.place(relx=0.4532, rely=0.88)
-
 	#Tạo button Không lưu ảnh
 		self.DontSave = Button(self.Screenshot, text="Không Lưu",bg = "#FBE698",font = "Helvetica 15 bold", width=21, height=2,borderwidth=5,command=DontSavePicture, bd = 5, activebackground='#F4A460')#Nút luu ảnh
 		self.DontSave.place(relx= 0.7531, rely = 0.88)

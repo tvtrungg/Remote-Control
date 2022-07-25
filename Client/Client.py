@@ -25,6 +25,7 @@ class GUI:
 	# Tạo tiêu đề cho hộp thoại
 		self.login.title("Login")
 		self.login.geometry("650x650")
+		self.login.resizable(False, False)
 		self.background= PhotoImage(file='./img/button/background.png')
 		self.mylabel = Label(self.login, image=self.background)
 		self.mylabel.place(x=0, y=0, relwidth=1, relheight=1)
