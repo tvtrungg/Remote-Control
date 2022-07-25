@@ -12,25 +12,25 @@ def DeleteRegValue(Client):
     Links = Client.recv(1024).decode("utf-8")                                       # Nhận đường dẫn từ server
     REG_SUB = Links                                                                 
     Client.sendall(bytes("Confirm","utf-8"))                                        # Gửi thông điệp đến server
-    Reg = Links.split("\\",1)                                                       # Lấy đường dẫn từ link
+    Key = Links.split("\\",1)                                                       # Lấy đường dẫn từ link
     
-    if Reg[0] == "HKEY_CLASSES_ROOT":
+    if Key[0] == "HKEY_CLASSES_ROOT":
         temp = 18
         linkReg = winreg.HKEY_CLASSES_ROOT                                          # Nếu đường dẫn là HKEY_CLASSES_ROOT
 
-    elif Reg[0] == "HKEY_CURRENT_USER":
+    elif Key[0] == "HKEY_CURRENT_USER":
         temp = 18
         linkReg = winreg.HKEY_CURRENT_USER                                          # Nếu đường dẫn là HKEY_CURRENT_USER
 
-    elif Reg[0] == "HKEY_LOCAL_MACHINE":
+    elif Key[0] == "HKEY_LOCAL_MACHINE":
         temp = 19
         linkReg = winreg.HKEY_LOCAL_MACHINE                                         # Nếu đường dẫn là HKEY_LOCAL_MACHINE
 
-    elif Reg[0] == "HKEY_USERS":
+    elif Key[0] == "HKEY_USERS":
         temp = 11
         linkReg = winreg.HKEY_USERS                                                 # Nếu đường dẫn là HKEY_USERS
 
-    elif Reg[0] == "HKEY_CURRENT_CONFIG":
+    elif Key[0] == "HKEY_CURRENT_CONFIG":
         temp = 20
         linkReg = winreg.HKEY_CURRENT_CONFIG                                        # Nếu đường dẫn là HKEY_CURRENT_CONFIG
 

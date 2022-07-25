@@ -1,16 +1,16 @@
-import winreg as winreg
-from tkinter import *
+import winreg as winreg     
+from tkinter import *   
 
 def DeleteKey(Client):
     Links = Client.recv(1024).decode("utf-8")                           # Nhận đường dẫn từ server
     Client.sendall(bytes("Got the link","utf-8"))                       # Gửi thông điệp đến server
-    Reg = Links.split("\\",1)                                           # Tách đường dẫn
+    Key = Links.split("\\",1)                                           # Tách đường dẫn
     
-    if Reg[0] == "HKEY_CLASSES_ROOT": linkReg = winreg.HKEY_CLASSES_ROOT                # Nếu đường dẫn là HKEY_CLASSES_ROOT
-    elif Reg[0] == "HKEY_CURRENT_USER": linkReg = winreg.HKEY_CURRENT_USER              # Nếu đường dẫn là HKEY_CURRENT_USER
-    elif Reg[0] == "HKEY_LOCAL_MACHINE": linkReg = winreg.HKEY_LOCAL_MACHINE            # Nếu đường dẫn là HKEY_LOCAL_MACHINE
-    elif Reg[0] == "HKEY_USERS": linkReg = winreg.HKEY_USERS                            # Nếu đường dẫn là HKEY_USERS
-    elif Reg[0] == "HKEY_CURRENT_CONFIG": linkReg = winreg.HKEY_CURRENT_CONFIG          # Nếu đường dẫn là HKEY_CURRENT_CONFIG    
+    if   Key[0] == "HKEY_CLASSES_ROOT": linkReg = winreg.HKEY_CLASSES_ROOT                # Nếu đường dẫn là HKEY_CLASSES_ROOT
+    elif Key[0] == "HKEY_CURRENT_USER": linkReg = winreg.HKEY_CURRENT_USER              # Nếu đường dẫn là HKEY_CURRENT_USER
+    elif Key[0] == "HKEY_LOCAL_MACHINE": linkReg = winreg.HKEY_LOCAL_MACHINE            # Nếu đường dẫn là HKEY_LOCAL_MACHINE
+    elif Key[0] == "HKEY_USERS": linkReg = winreg.HKEY_USERS                            # Nếu đường dẫn là HKEY_USERS
+    elif Key[0] == "HKEY_CURRENT_CONFIG": linkReg = winreg.HKEY_CURRENT_CONFIG          # Nếu đường dẫn là HKEY_CURRENT_CONFIG    
     else:
         Client.sendall(bytes("Path dont exist", "utf-8"))                               # Nếu đường dẫn không tồn tại
         checkdata = Client.recv(1024).decode("utf-8")                                   # Nhận thông điệp từ server
@@ -32,7 +32,7 @@ def DeleteKey(Client):
         checkdata = Client.recv(1024).decode("utf-8")                                   # Nhận thông điệp từ server
 
     try:
-        DeleteRegKey(linkReg, Reg[1])                                                   # Gọi hàm xóa đường dẫn
+        DeleteRegKey(linkReg, Key[1])                                                   # Gọi hàm xóa đường dẫn
     except:
         Client.sendall(bytes("Path dont exist", "utf-8"))                               # Nếu đường dẫn không tồn tại
         checkdata = Client.recv(1024).decode("utf-8")                                   # Nhận thông điệp từ server
