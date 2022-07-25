@@ -10,7 +10,6 @@ from tkinter import messagebox
 from PIL import ImageTk,Image
 from PIL import Image
 import Keystroke_Client				# KeyStroke.py
-import Registry_Client				# Registry.py
 import processRunning_Client		# processRunning.py
 import appRunning_Client			# appRunning.py
 import screenCapture_Client			# screenCapture.py
@@ -25,8 +24,10 @@ class GUI:
 		self.login.configure(bg = "#fff")
 	# Tạo tiêu đề cho hộp thoại
 		self.login.title("Login")
-		self.login.resizable(width = False,height = False)		# Không cho phép thay đổi kích thước của hộp thoại
-		self.login.configure(width = 600,height = 550)			# Kích thước của hộp thoại
+		self.login.geometry("650x650")
+		self.background= PhotoImage(file='./img/button/background.png')
+		self.mylabel = Label(self.login, image=self.background)
+		self.mylabel.place(x=0, y=0, relwidth=1, relheight=1)
 	# Tạo label
 		self.labelIP = Label(self.login, text = "Nhập địa chỉ IP để tiếp tục:", compound="center", bg ="#fff",font = "Helvetica 15 bold")
 		self.labelIP.place(relx = 0.05,rely = 0.1)
@@ -39,59 +40,52 @@ class GUI:
 
 		self.Home.mainloop()							# Chạy hệ thống
 		
-	def Control(self, Client): # Các hộp thoại chức năng điều khiển
+	def Controller(self, Client): # Các hộp thoại chức năng điều khiển
 	# Process Running
-		self.process = Button(self.login, text = "Process Running", bg = "#39B1C0", height =16, font=('Helvetica 10 bold'), command =(lambda : self.processRunning(Client)), bd = 5, activebackground='#1f6169')
-		self.process.place(relx = 0.02, rely = 0.35)
+		self.btn1= PhotoImage(file='./img/button/1.png')                      # Đặt hình ảnh
+		self.process = Button(self.login, image = self.btn1, command =(lambda : self.processRunning(Client)), bd = 0, bg = "#fff")
+		self.process.place(relx = 0.04, rely = 0.35)
 	# App Running
-		self.app = Button (self.login, text ="App Running", bg = "#8DDDE0",width =38,height =4, font=('Helvetica 10 bold'), command = (lambda : self.appRunning(Client)), bd = 5, activebackground='#497172')
+		self.btn2= PhotoImage(file='./img/button/2.png')                      # Đặt hình ảnh
+		self.app = Button (self.login, image=self.btn2, command = (lambda : self.appRunning(Client)), bd = 0, bg = "#fff")
 		self.app.place(relx = 0.24, rely = 0.35)
 	# Chụp màn hình
-		self.capture = Button(self.login, text ="Screen Capture",bg = "#E6E9D0", width =23, height =5, font=('Helvetica 10 bold'), command = (lambda : self.screenCapture(Client)), bd = 5, activebackground='#41423b')
-		self.capture.place(relx = 0.44, rely = 0.525)
-	#  Sửa registry
-		self.fix =Button(self.login, text="Edit registry",bg = "#15B5B0",height =3 , width =38, font=('Helvetica 10 bold'), command = (lambda : self.editRegistry(Client)), bd = 5, activebackground='#0e726f')
-		self.fix.place(relx = 0.24, rely = 0.725)
+		self.btn3= PhotoImage(file='./img/button/2.png')                      # Đặt hình ảnh
+		self.capture = Button(self.login,  image=self.btn3, command = (lambda : self.screenCapture(Client)), bd = 0, bg = "#fff")
+		self.capture.place(relx = 0.24, rely = 0.706)
 	# Keystroke
-		self.key = Button(self.login, text ="Keystroke",bg =  "#FBE698", height =11, width =11,font=('Helvetica 10 bold'), command = (lambda : self.keyStroke(Client)), bd = 5, activebackground='#776d47')
-		self.key.place(relx = 0.79, rely = 0.35)
+		self.btn4= PhotoImage(file='./img/button/1.png')                      # Đặt hình ảnh
+		self.key = Button(self.login, image = self.btn4, command = (lambda : self.keyStroke(Client)), bd = 0, bg = "#fff")
+		self.key.place(relx = 0.765, rely = 0.35)
 	# Tắt máy
-		self.shut = Button(self.login,text ="Shut Down", bg = "#775B50", width =12, height =5, font=('Helvetica 10 bold'), command = (lambda : self.shutDown(Client)), bd = 5, activebackground='#3f302a')
+		self.btn5= PhotoImage(file='./img/button/3.png')                      # Đặt hình ảnh
+		self.shut = Button(self.login, image = self.btn5, command = (lambda : self.shutDown(Client)), bd = 0, bg= "#fff")
 		self.shut.place(relx = 0.24, rely = 0.525)
 	# Thoát
-		self.escape = Button(self.login, text ="Exit",bg = "#F9BDC0",height =3, width =11,font=('Helvetica 10 bold'), command = (lambda : self.exist(Client)), bd = 5, activebackground='#7e5a5c')
-		self.escape.place(relx = 0.79, rely = 0.725)      
-		# self.top.mainloop()
+		self.btn6= PhotoImage(file='./img/button/3.png')                      # Đặt hình ảnh
+		self.escape = Button(self.login, image = self.btn6, command = (lambda : self.exist(Client)), bd = 0,bg = "#fff")
+		self.escape.place(relx = 0.504, rely = 0.525)      
 	
 #Hàm chụp ảnh màn hình
 	def screenCapture(self, Client):
 		try:
-			screenCapture_Client.screenCapture(self, Client)	# Đọc hàm Registry
+			screenCapture_Client.screenCapture(self, Client)	# Đọc hàm screenCapture
 		except:
 			messagebox.showinfo("Error !!!", "Lỗi kết nối")		# Thông báo lỗi nếu hàm lỗi
 	
 # Hàm khởi động các chương trình (Watch, Kill, Start)
 	def appRunning(self, Client):
 		try:
-			appRunning_Client.appRunning(self, Client)	# Đọc hàm Registry
+			appRunning_Client.appRunning(self, Client)	# Đọc hàm appRunning
 		except:
 			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 	
 # Hàm khởi động các process (Watch, Kill, Start)
 	def processRunning(self, Client):
 		try:
-			processRunning_Client.processRunning(self, Client)	# Đọc hàm Registry
+			processRunning_Client.processRunning(self, Client)	# Đọc hàm processRunning
 		except:
 			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
-
-
-# Hàm chỉnh sửa các Registry
-	def editRegistry(self, Client):
-		try:
-			Registry_Client.RegistryEdit(Client)	# Đọc hàm Registry
-		except:
-			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
-
 
 # Hàm theo dõi bàn phím (Hoạt động như Keylogger)
 	def keyStroke(self, Client):
@@ -127,7 +121,7 @@ class GUI:
 			Client.connect((HOST, 1234))				# Kết nối tới server
 			# Client.send(bytes("Success", 'utf-8'))		# Gửi thông điệp thành công
 			messagebox.showinfo("Successful !!!", "Kết nối server thành công")		#Nếu đúng sẽ hiển thị thông báo thành công
-			rcv = Thread(target=self.Control(Client))				# Sau đó gọi đến hàm Control để hiển thị các nút điều khiển
+			rcv = Thread(target=self.Controller(Client))				# Sau đó gọi đến hàm Controller để hiển thị các nút điều khiển
 			rcv.start()
 		except:     
 			messagebox.showinfo(" Error!!!", "Không thể kết nối đến server")  # Nếu lỗi thì in ra màn hình, sau đó đóng kết nối client

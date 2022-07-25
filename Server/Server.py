@@ -3,7 +3,7 @@ import socket
 import os
 import pyautogui
 from tkinter import *
-import Keystroke_SV, ReceiveRegistry_SV, GetValueReg_SV, SetValue_SV, DeleteRegValue_SV, CreateKey_SV, DeleteKey_SV
+import Keystroke_SV
 
 
 def readRequest (Client):
@@ -133,12 +133,6 @@ def takeRequest (Client):
             for i in range(length):                                                              
                 Client.sendall(bytes(Thread[i], "utf-8"))                                   # Gửi số lượng thread
                 checkdata = Client.recv(1024)                                               # Nhận dữ liệu từ client
-        elif "SendingReg" == Request: ReceiveRegistry_SV.ReceiveRegistry(Client)              # Nhận Registry
-        elif "GettingValueReg" == Request: GetValueReg_SV.GetValueReg(Client)                 # Lấy giá trị Registry
-        elif "SettingValueReg" == Request: SetValue_SV.SetValue(Client)                       # Thiết lập giá trị Registry
-        elif "DeletingValueReg" == Request: DeleteRegValue_SV.DeleteRegValue(Client)          # Xóa giá trị Registry
-        elif "CreatingKey" == Request: CreateKey_SV.CreateKey(Client)                         # Tạo key Registry
-        elif "DeletingKey" == Request: DeleteKey_SV.DeleteKey(Client)                         # Xóa key Registry
         elif "HookKey" == Request:                                                            # Hook key
             Client.sendall(bytes("Đã nhận", "utf-8"))                                         # Gửi thông báo đã nhận
             Keystroke_SV.Keystroke(Client)                                                    # Gọi hàm Keystroke
