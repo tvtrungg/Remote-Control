@@ -6,7 +6,7 @@ def CreateKey(Client):
     Client.sendall(bytes("Got the link","utf-8"))
     Reg = Links.split("\\",1)
 
-    if Reg[0] == "HKEY_CLASSES_ROOT": linkReg = winreg.HKEY_CLASSES_ROOT
+    if   Reg[0] == "HKEY_CLASSES_ROOT": linkReg = winreg.HKEY_CLASSES_ROOT
     elif Reg[0] == "HKEY_CURRENT_USER": linkReg = winreg.HKEY_CURRENT_USER
     elif Reg[0] == "HKEY_LOCAL_MACHINE": linkReg = winreg.HKEY_LOCAL_MACHINE
     elif Reg[0] == "HKEY_USERS": linkReg = winreg.HKEY_USERS
