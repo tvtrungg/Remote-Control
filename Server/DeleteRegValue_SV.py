@@ -11,7 +11,7 @@ def DeleteRegValue(Client):
                
     Links = Client.recv(1024).decode("utf-8")
     REG_SUB = Links
-    Client.sendall(bytes("Xac nhan","utf-8"))
+    Client.sendall(bytes("Confirm","utf-8"))
     Reg = Links.split("\\",1)
     
     if Reg[0] == "HKEY_CLASSES_ROOT":
@@ -38,7 +38,7 @@ def DeleteRegValue(Client):
         test = False
 
     Name = Client.recv(1024).decode("utf-8")
-    Client.sendall(bytes("Xac nhan","utf-8"))
+    Client.sendall(bytes("Confirm","utf-8"))
 
     if test == True:
         try:
@@ -51,8 +51,8 @@ def DeleteRegValue(Client):
 
     Receives = Client.recv(1024).decode("utf-8")
     if test == True:      
-        Client.sendall(bytes("Xoa value thanh cong","utf-8"))  
+        Client.sendall(bytes("Successfully deleted","utf-8"))  
     elif test == False:
-        Client.sendall(bytes("Sai duong dan", "utf-8"))
+        Client.sendall(bytes("Path dont exist", "utf-8"))
     
     Confirmation = Client.recv(1024).decode("utf-8")    

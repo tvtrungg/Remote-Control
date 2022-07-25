@@ -25,7 +25,7 @@ def takeRequest (Client):
         #Chụp màn hình rồi gửi lại cho client
         if "screenCapture" == Request:
             image = pyautogui.screenshot()                  # Chụp màn hình
-            new_image = image.resize((1080, 530))
+            new_image = image.resize((1084, 530))
             new_image.save("picture.png")                       # Lưu ảnh
             try:
                 myfile = open("picture.png", 'rb')          # Mở file dạng byte 
@@ -37,10 +37,8 @@ def takeRequest (Client):
 
         elif "Shutdown" == Request:
             os.system("shutdown /s /t 30")                  # Tắt máy trong vòng 30s
-            print("ShutDown")
+            
         elif "ProcessRunning" == Request:
-            print("ProcessRunning")
-           
             import subprocess
             cmd = 'powershell "Get-Process |Select-Object id, name, @{Name=\'ThreadCount\';Expression ={$_.Threads.Count}}| format-table'
             ProccessProc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
@@ -87,7 +85,6 @@ def takeRequest (Client):
             taskkillexitcode = call(taskkillparam)
             Client.send(bytes("Da xoa tac vu", "utf-8"))
         elif "OpenTask" == Request: #Mở app
-            print("OpenTask")
             import subprocess
             mode = 0o666
             flags = os.O_RDWR | os.O_CREAT
@@ -96,23 +93,23 @@ def takeRequest (Client):
             msg = msg[2:]
             msg = msg[:len(msg)-1]
             print(str(msg))
-            print("C:/Windows/System32/" + msg + ".exe")
-            cmd = 'powershell start ' + msg
-            subprocess.call(cmd)
-            #os.system("C:/Windows/System32/" + msg + ".exe")
-            Client.send(bytes("Da mo", "utf-8"))
+            try:
+                cmd = 'powershell start ' + msg
+                subprocess.call(cmd)
+                Client.send(bytes("opened", "utf-8"))
+            except:
+                Client.send(bytes("Not found", "utf-8"))
 
         elif "AppRunning" == Request:
-            print("AppRunning")
             import subprocess
             cmd = 'powershell "Get-Process |where {$_.mainWindowTItle} |Select-Object id, name, @{Name=\'ThreadCount\';Expression ={$_.Threads.Count}}| format-table'
-            appProc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+            openCMD = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE) 
             count = 0
             length = 0
             Name = ['' for i in range(100)]
             ID = ['' for i in range(100)]
             Thread = ['' for i in range(100)]
-            for line in appProc.stdout:
+            for line in openCMD.stdout:
                 if line.rstrip():
                     if count < 2:
                         count += 1
@@ -143,17 +140,14 @@ def takeRequest (Client):
         elif "CreatingKey" == Request: CreateKey_SV.CreateKey(Client)
         elif "DeletingKey" == Request: DeleteKey_SV.DeleteKey(Client)
         elif "HookKey" == Request:
-            print("KeyStroke")
             Client.sendall(bytes("Đã nhận", "utf-8"))
             Keystroke_SV.Keystroke(Client)
 
         elif "Exit" == Request:
-            print("Exit")
             Client.sendall(bytes("Đã thoát", "utf-8"))
             break
 
 def waitingConnection():
-
     print("Chờ các kết nối từ client...")
     
     while True:
@@ -169,10 +163,10 @@ def action():
     try:
         SERVER.listen()
         ACCEPT_THREAD = Thread(target = waitingConnection())
-        ACCEPT_THREAD.start()
-        ACCEPT_THREAD.join()
+        ACCEPT_THREAD.start()       #Khởi động thread 
+        ACCEPT_THREAD.join()        #Đợi cho thread kết thúc
     except:
-        print("Error occured!")
+        print("Error !!!, Server đã dừng")
     finally:
         SERVER.close()
 
@@ -181,8 +175,8 @@ def main():
     top.title("Server Connection")
     top.geometry("200x200")
     top.configure(background = "white")
-    btn1= PhotoImage(file='hinh1.png')
-    btn2= PhotoImage(file='hinh2.png')
+    btn1= PhotoImage(file='./img/button/hinh1.png')
+    btn2= PhotoImage(file='./img/button/hinh2.png')
     def on_enter(event):
         top.button.config(image=btn2)
     def on_leave(event):

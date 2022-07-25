@@ -3,7 +3,7 @@ from tkinter import *
 
 def DeleteKey(Client):
     Links = Client.recv(1024).decode("utf-8")
-    Client.sendall(bytes("Ok Nhan Link","utf-8"))
+    Client.sendall(bytes("Got the link","utf-8"))
     Reg = Links.split("\\",1)
     
     if Reg[0] == "HKEY_CLASSES_ROOT": linkReg = winreg.HKEY_CLASSES_ROOT
@@ -12,7 +12,7 @@ def DeleteKey(Client):
     elif Reg[0] == "HKEY_USERS": linkReg = winreg.HKEY_USERS
     elif Reg[0] == "HKEY_CURRENT_CONFIG": linkReg = winreg.HKEY_CURRENT_CONFIG
     else:
-        Client.sendall(bytes("Sai duong dan", "utf-8"))
+        Client.sendall(bytes("Path dont exist", "utf-8"))
         checkdata = Client.recv(1024).decode("utf-8")
         return
     
@@ -28,12 +28,12 @@ def DeleteKey(Client):
         winreg.DeleteKey(REG_KEY,"")
         winreg.CloseKey(REG_KEY)
         access = winreg.ConnectRegistry(None, linkReg)
-        Client.sendall(bytes("Da xoa thanh cong","utf-8"))
+        Client.sendall(bytes("Successfully deleted","utf-8"))
         checkdata = Client.recv(1024).decode("utf-8")
 
     try:
         DeleteRegKey(linkReg, Reg[1])
     except:
-        Client.sendall(bytes("Sai duong dan", "utf-8"))
+        Client.sendall(bytes("Path dont exist", "utf-8"))
         checkdata = Client.recv(1024).decode("utf-8")
         return     

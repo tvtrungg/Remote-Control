@@ -10,7 +10,7 @@ def screenCapture(self, client):
 		self.Screenshot = Toplevel()					# Tạo 1 hộp thoại mới
 		self.Screenshot.title("ScreenShot")			# Đặt tiêu đề cho hộp thoại
 		self.Screenshot.resizable(width = False,height = False)
-		self.Screenshot.configure(bg = "#C0C0C0", width = 1085, height = 610)		# Đặt màu nền cho hộp thoại
+		self.Screenshot.configure(bg = "#C0C0C0", width = 1090, height = 610)		# Đặt màu nền cho hộp thoại
 	#Hàm nhận ảnh từ server trả về
 		def ReceivePicture(): 	
 			try:
@@ -43,7 +43,7 @@ def screenCapture(self, client):
 			self.Screenshot.destroy()			
 
 	#Tạo canvas   
-		self.canvas = Canvas(self.Screenshot, bg = "white", width = 1080, height = 531) 	# Tạo canvas mới   
+		self.canvas = Canvas(self.Screenshot, bg = "white", width = 1084, height = 531) 	# Tạo canvas mới   
 		self.canvas.place(relx = 0,rely = 0)   		# Vẽ ảnh chụp màn hình lên canvas
 		
 	#Tạo button Chụp ảnh	
@@ -52,11 +52,11 @@ def screenCapture(self, client):
 
 	#Tạo button Lưu ảnh
 		self.Save = Button(self.Screenshot, text="Lưu",bg = "#F9BDC0",font = "Helvetica 15 bold",width=26,height=2,borderwidth=5,command=SavePicture, bd = 5, activebackground='#7e5a5c')#Nút luu ảnh
-		self.Save.place(relx=0.4522, rely=0.88)
+		self.Save.place(relx=0.4532, rely=0.88)
 
 	#Tạo button Không lưu ảnh
 		self.DontSave = Button(self.Screenshot, text="Không Lưu",bg = "#FBE698",font = "Helvetica 15 bold", width=21, height=2,borderwidth=5,command=DontSavePicture, bd = 5, activebackground='#F4A460')#Nút luu ảnh
-		self.DontSave.place(relx= 0.7521, rely = 0.88)
+		self.DontSave.place(relx= 0.7531, rely = 0.88)
 		self.Screenshot.mainloop()
 		os.remove("picture.png") 
 

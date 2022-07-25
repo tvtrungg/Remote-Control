@@ -3,9 +3,9 @@ from tkinter import *
 
 def GetValueReg(Client):
     Name = Client.recv(1024).decode("utf-8")
-    Client.sendall(bytes("Xac nhan","utf-8"))
+    Client.sendall(bytes("Confirm","utf-8"))
     Links = Client.recv(1024).decode("utf-8")
-    Client.sendall(bytes("Xac nhan","utf-8"))
+    Client.sendall(bytes("Confirm","utf-8"))
     Reg = Links.split("\\",1)
     check = True
     if Reg[0] == "HKEY_CLASSES_ROOT": linkReg = winreg.HKEY_CLASSES_ROOT
@@ -14,7 +14,7 @@ def GetValueReg(Client):
     elif Reg[0] == "HKEY_USERS": linkReg = winreg.HKEY_USERS
     elif Reg[0] == "HKEY_CURRENT_CONFIG": linkReg = winreg.HKEY_CURRENT_CONFIG
     else:
-        Client.sendall(bytes("Sai duong dan", "utf-8"))
+        Client.sendall(bytes("Path dont exist", "utf-8"))
         checkdata = Client.recv(1024).decode("utf-8")
         return
     REG_PATH = Reg[1]    
@@ -36,6 +36,6 @@ def GetValueReg(Client):
                         break
             winreg.CloseKey(REG_KEY)
         except WindowsError:
-            Client.sendall(bytes("Sai duong dan", "utf-8"))
+            Client.sendall(bytes("Path dont exist", "utf-8"))
             checkdata = Client.recv(1024).decode("utf-8")
    

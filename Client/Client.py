@@ -1,22 +1,19 @@
 from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
 import os
-import sys
 from tkinter import Tk, W, E
 from tkinter import Tk, Text, TOP, BOTH, X, N, LEFT
 from tkinter.ttk import Frame, Label, Button, Entry
 from tkinter import ttk
 from tkinter import *
-from tkinter import font
 from tkinter import messagebox
-from tkinter import filedialog
 from PIL import ImageTk,Image
 from PIL import Image
 import Keystroke_Client				# KeyStroke.py
 import Registry_Client				# Registry.py
-import processRunning_Client
-import appRunning_Client
-import screenCapture_Client
+import processRunning_Client		# processRunning.py
+import appRunning_Client			# appRunning.py
+import screenCapture_Client			# screenCapture.py
 
 class GUI:
 	def __init__(self):
@@ -30,19 +27,17 @@ class GUI:
 		self.login.title("Login")
 		self.login.resizable(width = False,height = False)		# Không cho phép thay đổi kích thước của hộp thoại
 		self.login.configure(width = 600,height = 550)			# Kích thước của hộp thoại
-		
 	# Tạo label
 		self.labelIP = Label(self.login, text = "Nhập địa chỉ IP để tiếp tục:", compound="center", bg ="#fff",font = "Helvetica 15 bold")
 		self.labelIP.place(relx = 0.05,rely = 0.1)
-
 	# Tạo input text IP
 		self.input_IP = Entry(self.login, textvariable = StringVar(), bg ="#FFFAF0", font = "Helvetica 14")
 		self.input_IP.place(relx = 0.501,rely = 0.105)
-
 	# Tạo nút nhấn, khi nhấn nút =>  dữ liệu sẽ được gửi đến server thông qua socket
-		self.go = Button(self.login,text = "Kết nối", width =18 ,bg = "#d3d3d3",font = "Helvetica 14 bold",command = (lambda : self.Connection_handling(self.input_IP.get())), bd = 5, activebackground='#F4A460')
-		self.go.place(relx = 0.3,rely = 0.2)
-		self.Home.mainloop()
+		self.connect = Button(self.login,text = "Kết nối", width =18 ,bg = "#d3d3d3",font = "Helvetica 14 bold",command = (lambda : self.Connection_handling(self.input_IP.get())), bd = 5, activebackground='#F4A460')
+		self.connect.place(relx = 0.3,rely = 0.2)		# Tọa độ x, y của nút nhấn
+
+		self.Home.mainloop()							# Chạy hệ thống
 		
 	def Control(self, Client): # Các hộp thoại chức năng điều khiển
 	# Process Running
@@ -73,7 +68,7 @@ class GUI:
 		try:
 			screenCapture_Client.screenCapture(self, Client)	# Đọc hàm Registry
 		except:
-			messagebox.showinfo("Error !!!", "Lỗi kết nối")
+			messagebox.showinfo("Error !!!", "Lỗi kết nối")		# Thông báo lỗi nếu hàm lỗi
 	
 # Hàm khởi động các chương trình (Watch, Kill, Start)
 	def appRunning(self, Client):
@@ -110,6 +105,7 @@ class GUI:
 	def shutDown(self, Client):
 		try:
 			Client.send(bytes("Shutdown",'utf-8'))		# Gửi thông điệp "shut down" đến server, server sẽ tự động tắt máy trong 30s
+			messagebox.showinfo("Success", "Máy tính sẽ tắt sau 30s")	# Thông báo thành công
 		except:
 			messagebox.showinfo("Error !!!", "Lỗi kết nối ")	# Nếu lỗi kết nối thì thông báo lỗi
 

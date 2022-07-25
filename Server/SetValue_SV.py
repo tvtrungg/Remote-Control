@@ -3,13 +3,13 @@ from tkinter import *
 
 def SetValue(Client):
     Name = Client.recv(1024).decode("utf-8")
-    Client.sendall(bytes("Xac nhan","utf-8"))
+    Client.sendall(bytes("Confirm","utf-8"))
     Links = Client.recv(1024).decode("utf-8")
-    Client.sendall(bytes("Xac nhan","utf-8"))
+    Client.sendall(bytes("Confirm","utf-8"))
     data_type = Client.recv(1024).decode("utf-8")
     Client.sendall(bytes("xac nhan","utf-8"))
     Value = Client.recv(2048).decode("utf-8")
-    Client.sendall(bytes("Xac nhan","utf-8"))
+    Client.sendall(bytes("Confirm","utf-8"))
 
     Reg = Links.split("\\", 1)
     check = True
@@ -19,7 +19,7 @@ def SetValue(Client):
     elif Reg[0] == "HKEY_USERS": linkReg = winreg.HKEY_USERS
     elif Reg[0] == "HKEY_CURRENT_CONFIG": linkReg = winreg.HKEY_CURRENT_CONFIG
     else:
-        Client.sendall(bytes("Sai duong dan", "utf-8"))
+        Client.sendall(bytes("Path dont exist", "utf-8"))
         checkdata = Client.recv(1024).decode("utf-8")
         return
     REG_PATH = Reg[1]
@@ -47,5 +47,5 @@ def SetValue(Client):
                 checkdata = Client.recv(1024).decode("utf-8")
             winreg.CloseKey(REG_KEY)  
         except WindowsError:
-            Client.sendall(bytes("Sai duong dan", "utf-8"))
+            Client.sendall(bytes("Path dont exist", "utf-8"))
             checkdata = Client.recv(1024).decode("utf-8")

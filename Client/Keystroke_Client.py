@@ -5,11 +5,11 @@ from tkinter import *
 
 def keystroke(client):
 	# Tạo ra cửa sổ của Keystroke
-		logger = ''												# Biến lưu trữ những gõ bàn phím
+		keylogger = ''												# Biến lưu trữ những gõ bàn phím
 		Stroke = Tk()											# Tạo ra cửa sổ
 		Stroke.title("Keystroke")  								# Đặt tiêu đề của cửa sổ
 		Stroke.geometry("425x320")								# Đặt kích thước của cửa sổ
-		Stroke.configure(bg = 'white')							# Đặt màu nền của cửa sổ
+		Stroke.configure(bg ='#fff')							# Đặt màu nền của cửa sổ
 		Stroke.resizable(False, False)							# Không cho phép thay đổi kích thước cửa sổ
 
 	
@@ -32,21 +32,21 @@ def keystroke(client):
 			checkdata = client.recv(1024).decode("utf-8")		# Nhận dữ liệu từ server
 
 		def Unhookkey():
-			nonlocal logger, UnhookClicked, HookClicked			# Khai báo biến logger, HookClicked, UnhookClicked
+			nonlocal keylogger, UnhookClicked, HookClicked			# Khai báo biến keylogger, HookClicked, UnhookClicked
 			if HookClicked == True:								# Nếu như nút Hook đã được nhấn thì không thực hiện gì cả
 				client.sendall(bytes("UnhookKey","utf-8"))    	# Gửi dữ liệu đến server
-				logger = ReceiveHook(client)					# Nhận dữ liệu từ server
-				client.sendall(bytes(logger,"utf-8")) 			# Gửi dữ liệu đến server
+				keylogger = ReceiveHook(client)					# Nhận dữ liệu từ server
+				client.sendall(bytes(keylogger,"utf-8")) 			# Gửi dữ liệu đến server
 				UnhookClicked = True							# Nút Unhook đã được nhấn
 				HookClicked = False								# Nút Hook chưa được nhấn
 
 		def Printkey():
-			nonlocal logger, UnhookClicked, HookClicked			# Khai báo biến logger, HookClicked, UnhookClicked
+			nonlocal keylogger, UnhookClicked, HookClicked			# Khai báo biến keylogger, HookClicked, UnhookClicked
 			if UnhookClicked == False: 							# Nếu như nút Unhook chưa được nhấn thì thực hiện các lệnh sau
 				client.sendall(bytes("UnhookKey","utf-8"))		# Gửi dữ liệu đến server
-				logger = ReceiveHook(client)					# Nhận dữ liệu từ server
+				keylogger = ReceiveHook(client)					# Nhận dữ liệu từ server
 			tab.delete(1.0, END)								# Xóa toàn bộ dữ liệu trong Textbox
-			tab.insert(1.0, logger)								# Đưa dữ liệu vào Textbox
+			tab.insert(1.0, keylogger)								# Đưa dữ liệu vào Textbox
 			UnhookClicked = True								# Nút Unhook đã được nhấn
 			HookClicked = False									# Nút Hook chưa được nhấn
 
