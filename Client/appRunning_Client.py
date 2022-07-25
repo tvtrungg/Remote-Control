@@ -63,7 +63,7 @@ def appRunning(self, client):				# appRunning_Client.py
 
 			self.mybar.heading("#0", text="App Name", anchor=W)									# Thiết lập tiêu đề cột #0
 			self.mybar.heading("1",text = "ID", anchor=CENTER)									# Thiết lập tiêu đề cột 1
-			self.mybar.heading("2", text = "Counting threading", anchor=CENTER)					# Thiết lập tiêu đề cột 2
+			self.mybar.heading("2", text = "Thread", anchor=CENTER)					# Thiết lập tiêu đề cột 2
 			for i in range(self.length):														# Vòng lặp lấy dữ liệu
 				self.mybar.insert(parent='', index='end',iid=0+i, text = self.Name[i], values=(self.ID[i],self.Thread[i]))	# Thêm dữ liệu vào treeview
 

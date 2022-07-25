@@ -177,12 +177,23 @@ def action():
         SERVER.close()
 
 def main():
-     top = Tk()
-     top.title("Server Connection")
-     top.geometry("150x150")
-     top.button = Button(top, text ="Mở Server",font=('Arial Bold', 13), command = action, bd = 10, bg='#c4ceff', activebackground='#8fa2ff' )
-     top.button.pack(fill=BOTH, pady=5, padx=5, expand=True)
-     top.mainloop()
+    top = Tk()
+    top.title("Server Connection")
+    top.geometry("200x200")
+    top.configure(background = "white")
+    btn1= PhotoImage(file='hinh1.png')
+    btn2= PhotoImage(file='hinh2.png')
+    def on_enter(event):
+        top.button.config(image=btn2)
+    def on_leave(event):
+        top.button.config(image=btn1)
+
+    top.button = Button(top, image=btn1,bg="#fff", command = action, relief="flat", bd=0, highlightthickness=0, activebackground="#f7f7f7")
+    top.button.pack(fill=BOTH, pady=5, padx=5, expand=True)
+    
+    top.button.bind("<Enter>", on_enter)
+    top.button.bind("<Leave>", on_leave)
+    top.mainloop()
 
 if __name__ == "__main__":
     main()
