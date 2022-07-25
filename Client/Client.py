@@ -30,13 +30,13 @@ class GUI:
 		self.mylabel = Label(self.login, image=self.background)
 		self.mylabel.place(x=0, y=0, relwidth=1, relheight=1)
 	# Tạo label
-		self.labelIP = Label(self.login, text = "Nhập địa chỉ IP để tiếp tục:", compound="center", bg ="#fff",font = "Helvetica 15 bold")
-		self.labelIP.place(relx = 0.05,rely = 0.1)
+		self.labelIP = Label(self.login, text = "Nhập địa chỉ IP để tiếp tục:", compound="center",bg ="#FFFEEC",font = "Helvetica 15 bold")
+		self.labelIP.place(relx = 0.05,rely = 0.05)
 	# Tạo input text IP
-		self.input_IP = Entry(self.login, textvariable = StringVar(), bg ="#FFFAF0", font = "Helvetica 14")
-		self.input_IP.place(relx = 0.501,rely = 0.105)
+		self.input_IP = Entry(self.login, textvariable = StringVar(), bg ="#FFF0F5", font = "Helvetica 14")
+		self.input_IP.place(relx = 0.501,rely = 0.05)
 	# Tạo nút nhấn, khi nhấn nút =>  dữ liệu sẽ được gửi đến server thông qua socket
-		self.connect = Button(self.login,text = "Kết nối", width =18 ,bg = "#d3d3d3",font = "Helvetica 14 bold",command = (lambda : self.Connection_handling(self.input_IP.get())), bd = 5, activebackground='#F4A460')
+		self.connect = Button(self.login,text = "Kết nối", width =18 ,bg = "#A3E4DB",font = "Helvetica 14 bold",command = (lambda : self.Connection_handling(self.input_IP.get())), bd = 5, activebackground='#F4A460')
 		self.connect.place(relx = 0.3,rely = 0.2)		# Tọa độ x, y của nút nhấn
 
 		self.Home.mainloop()							# Chạy hệ thống
@@ -44,28 +44,28 @@ class GUI:
 	def Controller(self, Client): # Các hộp thoại chức năng điều khiển
 	# Process Running
 		self.btn1= PhotoImage(file='./img/button/1.png')                      # Đặt hình ảnh
-		self.process = Button(self.login, image = self.btn1, command =(lambda : self.processRunning(Client)), bd = 0, bg = "#fff")
-		self.process.place(relx = 0.04, rely = 0.35)
+		self.process = Button(self.login, image = self.btn1, command =(lambda : self.processRunning(Client)), bd = 0, bg= "#fff")
+		self.process.place(relx = 0.05, rely = 0.4)
 	# App Running
 		self.btn2= PhotoImage(file='./img/button/2.png')                      # Đặt hình ảnh
 		self.app = Button (self.login, image=self.btn2, command = (lambda : self.appRunning(Client)), bd = 0, bg = "#fff")
-		self.app.place(relx = 0.24, rely = 0.35)
+		self.app.place(relx = 0.240, rely = 0.4)
 	# Chụp màn hình
-		self.btn3= PhotoImage(file='./img/button/2.png')                      # Đặt hình ảnh
+		self.btn3= PhotoImage(file='./img/button/3.png')                      # Đặt hình ảnh
 		self.capture = Button(self.login,  image=self.btn3, command = (lambda : self.screenCapture(Client)), bd = 0, bg = "#fff")
-		self.capture.place(relx = 0.24, rely = 0.706)
+		self.capture.place(relx = 0.240, rely = 0.758)
 	# Keystroke
-		self.btn4= PhotoImage(file='./img/button/1.png')                      # Đặt hình ảnh
+		self.btn4= PhotoImage(file='./img/button/4.png')                      # Đặt hình ảnh
 		self.key = Button(self.login, image = self.btn4, command = (lambda : self.keyStroke(Client)), bd = 0, bg = "#fff")
-		self.key.place(relx = 0.765, rely = 0.35)
+		self.key.place(relx = 0.765, rely = 0.4)
 	# Tắt máy
-		self.btn5= PhotoImage(file='./img/button/3.png')                      # Đặt hình ảnh
+		self.btn5= PhotoImage(file='./img/button/5.png')                      # Đặt hình ảnh
 		self.shut = Button(self.login, image = self.btn5, command = (lambda : self.shutDown(Client)), bd = 0, bg= "#fff")
-		self.shut.place(relx = 0.24, rely = 0.525)
+		self.shut.place(relx = 0.245, rely = 0.58)
 	# Thoát
-		self.btn6= PhotoImage(file='./img/button/3.png')                      # Đặt hình ảnh
+		self.btn6= PhotoImage(file='./img/button/6.png')                      # Đặt hình ảnh
 		self.escape = Button(self.login, image = self.btn6, command = (lambda : self.exist(Client)), bd = 0,bg = "#fff")
-		self.escape.place(relx = 0.504, rely = 0.525)      
+		self.escape.place(relx = 0.505, rely = 0.58)      
 	
 #Hàm chụp ảnh màn hình
 	def screenCapture(self, Client):
