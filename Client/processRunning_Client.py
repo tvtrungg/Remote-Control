@@ -8,11 +8,11 @@ def process_function(self, client):
     self.process = Tk()
     self.process.title("Process Running")       # Tựa đề của cửa sổ
     self.process.configure(bg="#FFFAF0")        # Màu nền
-
+# Hàm clear màn hình						
     def Clear():
         self.process_activity.destroy()            # Xóa process_activity
-
-    def WatchTask():
+# Hàm hiển thị các process đang chạy
+    def Watch_Processes():
         global process_activity                    # Khai báo biến process_activity
         global PORT                             # Khai báo biến PORT
         PORT = 1234                             # Khai báo PORT
@@ -21,7 +21,7 @@ def process_function(self, client):
         self.Name = [''] * 1000                 # Khai báo biến Name
         self.Thread = [''] * 1000               # Khai báo biến Thread
         try:
-            client.sendall(bytes("ProcessRunning", "utf-8"))        # Gửi thông điệp ProcessRunning
+            client.sendall(bytes("Watch_ProcessRunning", "utf-8"))        # Gửi thông điệp Watch_ProcessRunning
         except:
             messagebox.showinfo("Error !!!", "Lỗi kết nối ")        # Thông báo lỗi
             self.process.destroy()                                  # Xóa cửa sổ
@@ -66,8 +66,8 @@ def process_function(self, client):
         self.mybar.heading("2", text="Thread", anchor=CENTER)                       # Đặt tiêu đề cột 2
         for i in range(self.length):
             self.mybar.insert(parent='', index='end', iid=0+i, text=self.Name[i], values=(self.ID[i], self.Thread[i]))                      # Đặt dữ liệu cột 1
-
-    def KillProcess():
+# Hàm dừng 1 process
+    def Kill_Process():
         self.screen_KillTask = Tk()                     # Khai báo cửa sổ
         self.screen_KillTask.geometry("320x50")         # Đặt kích thước cửa sổ
         self.screen_KillTask.title("Kill")              # Đặt tiêu đề cửa sổ
@@ -76,9 +76,9 @@ def process_function(self, client):
         self.Name_input.grid(row=0, column=0, columnspan=3, padx=5, pady=5)          # Đặt Entry
         self.Name_input.insert(END, "Nhập tên")                          # Đặt giá trị mặc định
 
-        def PressKill():
+        def Kill_Func():
             self.AppName = self.Name_input.get()                         # Lấy giá trị của Entry
-            client.sendall(bytes("KillTask", "utf-8"))                  # Gửi dữ liệu từ client lên server
+            client.sendall(bytes("Kill_Task", "utf-8"))                  # Gửi dữ liệu từ client lên server
             try:
                 client.sendall(bytes(self.AppName, "utf-8"))            # Gửi dữ liệu từ client lên server
                 self.checkdata = client.recv(1024).decode("utf-8")      # Nhận dữ liệu từ server
@@ -87,14 +87,14 @@ def process_function(self, client):
                 messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")     # Thông báo lỗi
 
         Kill_Button = Button(self.screen_KillTask, bg="#FFE4E1", text="Kill", font="Helvetica 10 bold", padx=20,
-                            command=PressKill, bd=5, activebackground='#F4A460').grid(row=0, column=4, padx=5, pady=5)      # Khai báo nút Kill
+                            command=Kill_Func, bd=5, activebackground='#F4A460').grid(row=0, column=4, padx=5, pady=5)      # Khai báo nút Kill
+# Hàm khởi động 1 process
+    def Start_Process():
+        self.screen_Start = Tk()
+        self.screen_Start.geometry("320x50")
+        self.screen_Start.title("Start")
 
-    def StartTask():
-        self.StartTask = Tk()
-        self.StartTask.geometry("320x50")
-        self.StartTask.title("Start")
-
-        self.Name_input = Entry(self.StartTask, width=35)
+        self.Name_input = Entry(self.screen_Start, width=35)
         self.Name_input.grid(row=0, column=0, columnspan=3, padx=5, pady=5)
         self.Name_input.insert(END, "Nhập Tên")                  # Đặt giá trị mặc định
 
@@ -108,9 +108,9 @@ def process_function(self, client):
             except:
                 messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")   # Thông báo lỗi
 
-        Start_Button = Button(self.StartTask, text="Start", bg="#F9BDC0", font="Helvetica 10 bold", padx=20, command=PressStart, bd=5).grid(row=0, column=4, padx=5, pady=5)
+        Start_Button = Button(self.screen_Start, text="Start", bg="#F9BDC0", font="Helvetica 10 bold", padx=20, command=PressStart, bd=5).grid(row=0, column=4, padx=5, pady=5)
 
-    Start = Button(self.process, text="Start", font="Helvetica 10 bold", padx=30, pady=20, command=StartTask, bd=5, bg = "#E6E9D0", activebackground='#bec0b1').grid(row=0, column=0, padx=8)
-    Watch = Button(self.process, text="Watch", font="Helvetica 10 bold", padx=30, pady=20, command=WatchTask, bd=5, bg = "#F9BDC0", activebackground='#7e5a5c').grid(row=0, column=1, padx=8)
-    Kill = Button(self.process, text="Kill", font="Helvetica 10 bold", padx=30, pady=20, command=KillProcess, bd=5, bg = "#8DDDE0", activebackground='#497172').grid(row=0, column=2, padx=8)
+    Start = Button(self.process, text="Start", font="Helvetica 10 bold", padx=30, pady=20, command=Start_Process, bd=5, bg = "#E6E9D0", activebackground='#bec0b1').grid(row=0, column=0, padx=8)
+    Watch = Button(self.process, text="Watch", font="Helvetica 10 bold", padx=30, pady=20, command=Watch_Processes, bd=5, bg = "#F9BDC0", activebackground='#7e5a5c').grid(row=0, column=1, padx=8)
+    Kill = Button(self.process, text="Kill", font="Helvetica 10 bold", padx=30, pady=20, command=Kill_Process, bd=5, bg = "#8DDDE0", activebackground='#497172').grid(row=0, column=2, padx=8)
     Delete = Button(self.process, text="Delete", font="Helvetica 10 bold", padx=30, pady=20, command=Clear, bd=5, bg = "#FBE698", activebackground='#776d47').grid(row=0, column=3, padx=8)

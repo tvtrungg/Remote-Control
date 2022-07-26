@@ -46,16 +46,16 @@ def screenCapture(self, client):
 		self.canvas = Canvas(self.Screenshot, bg = "white", width = 1084, height = 531) 	# Tạo canvas mới   
 		self.canvas.place(relx = 0,rely = 0)   		# Vẽ ảnh chụp màn hình lên canvas
 	#Tạo button Chụp ảnh	
-		self.btn1= PhotoImage(file='./img/button/chup.png')                      # Đặt hình ảnh
-		self.cap = Button(self.Screenshot, image=self.btn1, command = ReceivePicture, bd = 0) #Nút chụp hình
+		self.btnChup= PhotoImage(file='./img/button/chup.png')                      # Đặt hình ảnh
+		self.cap = Button(self.Screenshot, image=self.btnChup, command = ReceivePicture, bd = 0) #Nút chụp hình
 		self.cap.place(relx=0, rely=0.88)
 	#Tạo button Lưu ảnh
-		self.btn2= PhotoImage(file='./img/button/luu.png')                      # Đặt hình ảnh
-		self.Save = Button(self.Screenshot, image=self.btn2, command=SavePicture, bd = 0)#Nút luu ảnh
+		self.btnSave= PhotoImage(file='./img/button/luu.png')                      # Đặt hình ảnh
+		self.Save = Button(self.Screenshot, image=self.btnSave, command=SavePicture, bd = 0)#Nút luu ảnh
 		self.Save.place(relx=0.4532, rely=0.88)
 	#Tạo button Không lưu ảnh
-		self.btn3= PhotoImage(file='./img/button/khongluu.png')                      # Đặt hình ảnh
-		self.DontSave = Button(self.Screenshot, image=self.btn3, command=DontSavePicture, bd = 0)#Nút luu ảnh
+		self.btnDSave= PhotoImage(file='./img/button/khongluu.png')                      # Đặt hình ảnh
+		self.DontSave = Button(self.Screenshot, image=self.btnDSave, command=DontSavePicture, bd = 0)#Nút luu ảnh
 		self.DontSave.place(relx= 0.7531, rely = 0.88)
 		self.Screenshot.mainloop()
 		os.remove("picture.png") 

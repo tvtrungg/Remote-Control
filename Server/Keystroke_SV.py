@@ -51,7 +51,7 @@ def Keystroke(Client):
                     elif(str(temp) == "<98>"): temp = "2"   # ...
                     elif(str(temp) == "<99>"): temp = "3"
                     elif(str(temp) == "<100>"): temp = "4"
-                    elif(str(temp) == "<101"): temp = "5"
+                    elif(str(temp) == "<101>"): temp = "5"
                     elif(str(temp) == "<102>"): temp = "6"
                     elif(str(temp) == "<103>"): temp = "7"
                     elif(str(temp) == "<104>"): temp = "8"

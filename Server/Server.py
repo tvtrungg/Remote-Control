@@ -5,14 +5,14 @@ import pyautogui
 from tkinter import *
 import Keystroke_SV
 
-
 def readRequest (Client):
     request =""
     try:
         request = Client.recv(1024).decode('utf-8')     # Nhận yêu cầu từ phía client
+    except:
+        print("Error !!!, Không nhận được yêu cầu từ client")
     finally:
         return request
-
 
 def takeRequest (Client):
     while True:
@@ -30,17 +30,15 @@ def takeRequest (Client):
             try:
                 myfile = open("picture.png", 'rb')          # Mở file dạng byte 
                 bytess = myfile.read()                      # Đọc file
-                Client.sendall(bytess)                      # Gửi file
+                Client.sendall(bytess)                      # Gửi file cho client 
                 myfile.close()
             except:
                 print("Không chụp được màn hình")
 
-        elif "Shutdown" == Request:
-            os.system("shutdown /s /t 30")                  # Tắt máy trong vòng 30s
-            
-        elif "ProcessRunning" == Request:
+        elif "Watch_ProcessRunning" == Request:     
             import subprocess
-            cmd = 'powershell "Get-Process |Select-Object id, name, @{Name=\'ThreadCount\';Expression ={$_.Threads.Count}}| format-table'
+            # Lệnh powershell để lấy thông tin của các process đang chạy
+            cmd = 'powershell "Get-Process |Select-Object id, name, @{Name=\'ThreadCount\';Expression ={$_.Threads.Count}}| format-table'   
             ProccessProc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)            # Tạo process
             count = 0                                                               # Đếm số lượng process
             length = 0                                                              # Đếm chiều dài của process
@@ -63,42 +61,14 @@ def takeRequest (Client):
             Client.sendall(bytes(str(length),"utf-8"))                      # Gửi số lượng process
 
             for i in range(length):
-                Client.sendall(bytes(ID[i],"utf-8"))                                            # Gửi ID process
+                Client.sendall(bytes(ID[i],"utf-8"))                                            # Gửi ID process về client
+                checkdata = Client.recv(1024)                                                   # Nhận dữ liệu từ client 
+            for i in range(length):
+                Client.sendall(bytes(Name[i], "utf-8"))                                         # Gửi tên process về client  
                 checkdata = Client.recv(1024)                                                   # Nhận dữ liệu từ client
             for i in range(length):
-                Client.sendall(bytes(Name[i], "utf-8"))                                         # Gửi tên process
+                Client.sendall(bytes(Thread[i], "utf-8"))                                       # Gửi số lượng thread về client
                 checkdata = Client.recv(1024)                                                   # Nhận dữ liệu từ client
-            for i in range(length):
-                Client.sendall(bytes(Thread[i], "utf-8"))                                       # Gửi số lượng thread
-                checkdata = Client.recv(1024)                                                   # Nhận dữ liệu từ client
-
-        elif "KillTask" == Request: #Xóa
-            print("KillTask")
-            m = Client.recv(1024)                           # Nhận ID process
-            msg = str(m)                                    # Chuyển dữ liệu từ bytes sang string
-            msg = msg[2:]                                   # Xóa kí tự 'b'
-            msg = msg[:len(msg)-1]                          # Xóa kí tự '\n'
-            print(str(msg))                                 # In ID process
-            from subprocess import call                             # Import thư viện call
-            taskkillexe = "c:/windows/system32/taskkill.exe"            # Đường dẫn taskkill.exe
-            taskkillparam = (taskkillexe, '/F',  '/IM', msg + '.exe')   # Tham số tham số
-            taskkillexitcode = call(taskkillparam)          # Gọi taskkill.exe
-            Client.send(bytes("Da xoa tac vu", "utf-8"))    # Gửi thông báo đã xóa
-        elif "OpenTask" == Request: #Mở app
-            import subprocess
-            mode = 0o666            # Thiết lập mode (quyền truy cập tệp bát phân. 0o trong ES6 đại diện hệ bát phân)
-            flags = os.O_RDWR | os.O_CREAT              # Thiết lập các flag
-            m = Client.recv(1024)                       # Nhận tên app
-            msg = str(m)                                # Chuyển dữ liệu từ bytes sang string
-            msg = msg[2:]                               # Xóa kí tự 'b'
-            msg = msg[:len(msg)-1]                       # Xóa kí tự '\n'
-                                                              
-            try:
-                cmd = 'powershell start ' + msg                 # Tạo process
-                subprocess.call(cmd)                            # Gọi process và thực thi
-                Client.send(bytes("opened", "utf-8"))                            # Gửi thông báo đã mở
-            except:
-                Client.send(bytes("Not found", "utf-8"))                         # Gửi thông báo không tìm thấy
 
         elif "AppRunning" == Request:
             import subprocess                                              
@@ -133,9 +103,43 @@ def takeRequest (Client):
             for i in range(length):                                                              
                 Client.sendall(bytes(Thread[i], "utf-8"))                                   # Gửi số lượng thread
                 checkdata = Client.recv(1024)                                               # Nhận dữ liệu từ client
+        
+
+        elif "OpenTask" == Request: #Mở app
+            import subprocess
+            mode = 0o666            # Thiết lập mode (quyền truy cập tệp bát phân. 0o trong ES6 đại diện hệ bát phân)
+            flags = os.O_RDWR | os.O_CREAT              # Thiết lập cờ (cờ đọc và ghi)
+            m = Client.recv(1024)                       # Nhận yêu cầu mở app/process
+            msg = str(m)                                # Chuyển dữ liệu từ bytes sang string
+            msg = msg[2:]                               # Xóa kí tự 'b' từ đầu dữ liệu
+            msg = msg[:len(msg)-1]                      # Xóa kí tự '\n' đầu dữ liệu
+                                                              
+            try:
+                cmd = 'powershell start ' + msg                 # Tạo process
+                subprocess.call(cmd)                            # Gọi process và thực thi
+                Client.send(bytes("opened", "utf-8"))                            # Gửi thông báo đã mở
+            except:
+                Client.send(bytes("Not found", "utf-8"))                         # Gửi thông báo không tìm thấy
+
+        elif "Kill_Task" == Request: #Xóa
+            m = Client.recv(1024)                           # Nhận ID process
+            msg = str(m)                                    # Chuyển dữ liệu từ bytes sang string
+            msg = msg[2:]                                   # Xóa kí tự 'b' từ đầu dữ liệu
+            msg = msg[:len(msg)-1]                          # Xóa kí tự '\n'
+            print(str(msg))                                 # In ID process
+            from subprocess import call                             # Import thư viện call để gọi lệnh kill process
+            taskkillexe = "c:/windows/system32/taskkill.exe"            # Đường dẫn taskkill.exe
+            taskkillparam = (taskkillexe, '/F',  '/IM', msg + '.exe')   # Truyền tham số vào taskkill.exe
+            taskkillexitcode = call(taskkillparam)          # Gọi taskkill.exe
+            Client.send(bytes("Da xoa tac vu", "utf-8"))    # Gửi thông báo đã xóa
+
+        
         elif "HookKey" == Request:                                                            # Hook key
             Client.sendall(bytes("Đã nhận", "utf-8"))                                         # Gửi thông báo đã nhận
             Keystroke_SV.Keystroke(Client)                                                    # Gọi hàm Keystroke
+
+        elif "Shutdown" == Request:
+            os.system("shutdown /s /t 30")                  # Tắt máy trong vòng 30s
 
         elif "Exit" == Request:
             Client.sendall(bytes("Đã thoát", "utf-8"))                                        # Gửi thông báo đã thoát
@@ -148,7 +152,6 @@ def waitingConnection():
         client, Address = SERVER.accept()                                                       # Chấp nhận kết nối
         print("Client", Address, "---> Đã kết nối !!!")                                         
         Thread(target = takeRequest, args = (client,)).start()                                  # Tạo thread
-
 
 SERVER =socket.socket(socket.AF_INET,socket.SOCK_STREAM)                                        # Tạo socket
 SERVER.bind((socket.gethostbyname(socket.gethostname()), 1234))                                 # Đặt port

@@ -44,28 +44,28 @@ class GUI:
 		
 	def Controller(self, Client): # Các hộp thoại chức năng điều khiển
 	# Process Running
-		self.btn1= PhotoImage(file='./img/button/1.png')                      # Đặt hình ảnh
-		self.process = Button(self.login, image = self.btn1, command =(lambda : self.process_function(Client)), bd = 0, bg= "#fff")
+		self.btnProcess= PhotoImage(file='./img/button/processRunning.png')                      # Đặt hình ảnh
+		self.process = Button(self.login, image = self.btnProcess, command =(lambda : self.process_function(Client)), bd = 0, bg= "#fff")
 		self.process.place(relx = 0.05, rely = 0.4)
 	# App Running
-		self.btn2= PhotoImage(file='./img/button/2.png')                      # Đặt hình ảnh
-		self.app = Button (self.login, image=self.btn2, command = (lambda : self.application_function(Client)), bd = 0, bg = "#fff")
+		self.btnApp= PhotoImage(file='./img/button/appRunning.png')                      # Đặt hình ảnh
+		self.app = Button (self.login, image=self.btnApp, command = (lambda : self.application_function(Client)), bd = 0, bg = "#fff")
 		self.app.place(relx = 0.240, rely = 0.4)
 	# Chụp màn hình
-		self.btn3= PhotoImage(file='./img/button/3.png')                      # Đặt hình ảnh
-		self.capture = Button(self.login,  image=self.btn3, command = (lambda : self.screenCapture(Client)), bd = 0, bg = "#fff")
+		self.btnSCapture= PhotoImage(file='./img/button/screenCapture.png')                      # Đặt hình ảnh
+		self.capture = Button(self.login,  image=self.btnSCapture, command = (lambda : self.screenCapture(Client)), bd = 0, bg = "#fff")
 		self.capture.place(relx = 0.240, rely = 0.758)
 	# Keystroke
-		self.btn4= PhotoImage(file='./img/button/4.png')                      # Đặt hình ảnh
-		self.key = Button(self.login, image = self.btn4, command = (lambda : self.keyStroke(Client)), bd = 0, bg = "#fff")
+		self.btnKStroke= PhotoImage(file='./img/button/keyStroke.png')                      # Đặt hình ảnh
+		self.key = Button(self.login, image = self.btnKStroke, command = (lambda : self.keyStroke(Client)), bd = 0, bg = "#fff")
 		self.key.place(relx = 0.765, rely = 0.4)
 	# Tắt máy
-		self.btn5= PhotoImage(file='./img/button/5.png')                      # Đặt hình ảnh
-		self.shut = Button(self.login, image = self.btn5, command = (lambda : self.shutDown(Client)), bd = 0, bg= "#fff")
+		self.btnSDwon= PhotoImage(file='./img/button/shutDown.png')                      # Đặt hình ảnh
+		self.shut = Button(self.login, image = self.btnSDwon, command = (lambda : self.shutDown(Client)), bd = 0, bg= "#fff")
 		self.shut.place(relx = 0.245, rely = 0.58)
 	# Thoát
-		self.btn6= PhotoImage(file='./img/button/6.png')                      # Đặt hình ảnh
-		self.escape = Button(self.login, image = self.btn6, command = (lambda : self.exist(Client)), bd = 0,bg = "#fff")
+		self.btnExist= PhotoImage(file='./img/button/exit.png')                      # Đặt hình ảnh
+		self.escape = Button(self.login, image = self.btnExist, command = (lambda : self.exist(Client)), bd = 0,bg = "#fff")
 		self.escape.place(relx = 0.505, rely = 0.58)      
 	
 #Hàm chụp ảnh màn hình
@@ -96,7 +96,6 @@ class GUI:
 		except:
 			messagebox.showinfo("Error !!!", "Lỗi kết nối ")
 
-
 # Hàm Shutdown 
 	def shutDown(self, Client):
 		try:
@@ -114,10 +113,9 @@ class GUI:
 		Client.close()							# Đóng kết nối
 		self.Home.destroy()						# Đóng cửa sổ
 
-
 # Hàm xử lý kết nối giữa server - Client
 	def Connection_handling(self, HOST):
-		Client = socket(AF_INET,SOCK_STREAM)
+		Client = socket(AF_INET,SOCK_STREAM) 			# Tạo kết nối
 	#Kiểm tra lỗi kết nối bằng cách dùng try và except
 		try: 
 			Client.connect((HOST, 1234))				# Kết nối tới server

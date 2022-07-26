@@ -12,7 +12,6 @@ def keystroke(client):
 		Stroke.configure(bg ='#fff')							# Đặt màu nền của cửa sổ
 		Stroke.resizable(False, False)							# Không cho phép thay đổi kích thước cửa sổ
 
-	
 		tab = Text(Stroke, width = 50, heigh = 15)				# Tạo ra một Textbox
 		tab.grid(row = 3, column = 0, columnspan= 4)			# Đặt Textbox vào cửa sổ
 		HookClicked = False										# Biến kiểm tra xem có đang nhấn phím hay không
@@ -22,15 +21,15 @@ def keystroke(client):
 			data = client.recv(1024).decode("utf-8")			# Nhận dữ liệu từ server
 			client.sendall(bytes(data,"utf-8"))  				# Gửi dữ liệu đến server
 			return data											# Trả về dữ liệu nhận được
-
-		def Hookkey():
+	# Hàm lắng nghe bàn phím
+		def Hookkey():	
 			nonlocal HookClicked, UnhookClicked
 			if HookClicked == True: return						# Nếu như nút Hook đã được nhấn thì không thực hiện gì cả
 			HookClicked = True									# Nếu như nút Hook chưa được nhấn thì thực hiện các lệnh sau
 			UnhookClicked = False								# Nút Unhook chưa được nhấn
 			client.sendall(bytes("HookKey","utf-8"))			# Gửi dữ liệu đến server
 			checkdata = client.recv(1024).decode("utf-8")		# Nhận dữ liệu từ server
-
+	# Hàm dừng lắng nghe bàn phím
 		def Unhookkey():
 			nonlocal keylogger, UnhookClicked, HookClicked			# Khai báo biến keylogger, HookClicked, UnhookClicked
 			if HookClicked == True:								# Nếu như nút Hook đã được nhấn thì không thực hiện gì cả
@@ -39,7 +38,7 @@ def keystroke(client):
 				client.sendall(bytes(keylogger,"utf-8")) 			# Gửi dữ liệu đến server
 				UnhookClicked = True							# Nút Unhook đã được nhấn
 				HookClicked = False								# Nút Hook chưa được nhấn
-
+	# In khóa ra màn hình
 		def Printkey():
 			nonlocal keylogger, UnhookClicked, HookClicked			# Khai báo biến keylogger, HookClicked, UnhookClicked
 			if UnhookClicked == False: 							# Nếu như nút Unhook chưa được nhấn thì thực hiện các lệnh sau
@@ -49,7 +48,7 @@ def keystroke(client):
 			tab.insert(1.0, keylogger)								# Đưa dữ liệu vào Textbox
 			UnhookClicked = True								# Nút Unhook đã được nhấn
 			HookClicked = False									# Nút Hook chưa được nhấn
-
+	# Làm sạch màn hình
 		def Deletekey():										# Hàm xóa toàn bộ dữ liệu trong Textbox
 			tab.delete(1.0,END)									# Xóa toàn bộ dữ liệu trong Textbox
 					    
