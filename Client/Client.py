@@ -1,11 +1,10 @@
-from socket import AF_INET, socket, SOCK_STREAM
+import socket       # thư viện socket
 from threading import Thread
-import os
-from tkinter import Tk, W, E
+from tkinter import Tk, W, E		
 from tkinter import Tk, Text, TOP, BOTH, X, N, LEFT
 from tkinter.ttk import Frame, Label, Button, Entry
 from tkinter import ttk
-from tkinter import *
+from tkinter import *			#Thư viện GUI
 from tkinter import messagebox
 from PIL import ImageTk,Image
 from PIL import Image
@@ -13,6 +12,16 @@ import Keystroke_Client				# KeyStroke.py
 import processRunning_Client		# process_function.py
 import appRunning_Client			# application_function.py
 import screenCapture_Client			# screenCapture.py
+
+#AF_INET        : cho biết đang yêu cầu một socket Internet Protocol(IP), cụ thể là IPv4
+#SOCK_STREAM    : chỉ loại kết nối TCP IP hoặc UDP . Chương trình nhóm em sẽ chạy trên một cổng kết nối TCP
+#bind()         : Phương thức này gắn kết địa chỉ (host,port) tới Socket
+#listen()       : Phương thức này cho phép một cái chờ kết nối từ một các client.
+#accept()       : Phương thức này chấp nhận một cách thụ động kết nối TCP Client, đợi cho tới khi kết nối tới.
+#recv()         : Phương thức này nhận TCP message.
+#send()         : Phương thức này gửi TCP message.
+#close()        : Phương thức này đóng kết nối.
+#gethostbyname(): Trả về hostname.
 
 class GUI:
 	def __init__(self):
@@ -34,8 +43,13 @@ class GUI:
 		self.labelIP = Label(self.login, text = "Nhập địa chỉ IP để tiếp tục:", compound="center",bg ="#FFFEEC",font = "Helvetica 15 bold")
 		self.labelIP.place(relx = 0.05,rely = 0.05)
 	# Tạo input text IP
-		self.input_IP = Entry(self.login, textvariable = StringVar(), bg ="#FFF0F5", font = "Helvetica 14")
+		SERVER_IP = socket.gethostbyname(socket.gethostname())
+		print(SERVER_IP)
+		
+		self.input_IP = Entry(self.login, bg ="#FFF0F5", font = "Helvetica 14")
+		self.input_IP.insert(END, SERVER_IP)
 		self.input_IP.place(relx = 0.501,rely = 0.05)
+		self.input_IP.focus()  # tạo con trỏ nhấp nháy trong ô text
 	# Tạo nút nhấn, khi nhấn nút =>  dữ liệu sẽ được gửi đến server thông qua socket
 		self.connect = Button(self.login,text = "Kết nối", width =20 ,bg = "#A3E4DB",font = "Helvetica 15 bold",command = (lambda : self.Connection_handling(self.input_IP.get())), bd = 5, activebackground='#F4A460')
 		self.connect.place(relx = 0.3,rely = 0.18)		# Tọa độ x, y của nút nhấn
@@ -100,6 +114,7 @@ class GUI:
 	def shutDown(self, Client):
 		try:
 			Client.send(bytes("Shutdown",'utf-8'))		# Gửi thông điệp "shut down" đến server, server sẽ tự động tắt máy trong 30s
+			#send(): 	Phương thức này truyền TCP message.
 			messagebox.showinfo("Success", "Máy tính sẽ tắt sau 30s")	# Thông báo thành công
 		except:
 			messagebox.showinfo("Error !!!", "Lỗi kết nối ")	# Nếu lỗi kết nối thì thông báo lỗi
@@ -114,11 +129,13 @@ class GUI:
 		self.Home.destroy()						# Đóng cửa sổ
 
 # Hàm xử lý kết nối giữa server - Client
+	
 	def Connection_handling(self, HOST):
-		Client = socket(AF_INET,SOCK_STREAM) 			# Tạo kết nối
+		PORT = 1234						# Đặt cổng kết nối
+		Client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)       # Tạo socket 
 	#Kiểm tra lỗi kết nối bằng cách dùng try và except
 		try: 
-			Client.connect((HOST, 1234))				# Kết nối tới server
+			Client.connect((HOST, PORT))				# Kết nối tới server
 			# Client.send(bytes("Success", 'utf-8'))		# Gửi thông điệp thành công
 			messagebox.showinfo("Successful !!!", "Kết nối server thành công")		#Nếu đúng sẽ hiển thị thông báo thành công
 			rcv = Thread(target=self.Controller(Client))				# Sau đó gọi đến hàm Controller để hiển thị các nút điều khiển

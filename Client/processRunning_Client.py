@@ -82,6 +82,7 @@ def process_function(self, client):
             try:
                 client.sendall(bytes(self.AppName, "utf-8"))            # Gửi dữ liệu từ client lên server
                 self.checkdata = client.recv(1024).decode("utf-8")      # Nhận dữ liệu từ server
+                # recv(): 	Phương thức này nhận TCP message.
                 messagebox.showinfo("", "Đã đóng chương trình")         # Thông báo đã đóng chương trình
             except:
                 messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")     # Thông báo lỗi

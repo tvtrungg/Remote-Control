@@ -1,14 +1,33 @@
 from threading import Thread
-import socket
+import socket       # thư viện socket
 import os
 import pyautogui
 from tkinter import *
 import Keystroke_SV
 
+#AF_INET        : cho biết đang yêu cầu một socket Internet Protocol(IP), cụ thể là IPv4
+#SOCK_STREAM    : chỉ loại kết nối TCP IP hoặc UDP . Chương trình nhóm em sẽ chạy trên một cổng kết nối TCP
+#bind()         : Phương thức này gắn kết địa chỉ (host,port) tới Socket
+#listen()       : Phương thức này cho phép một cái chờ kết nối từ một các client.
+#accept()       : Phương thức này chấp nhận một cách thụ động kết nối TCP Client, đợi cho tới khi kết nối tới.
+#recv()         : Phương thức này nhận TCP message.
+#send()         : Phương thức này gửi TCP message.
+#close()        : Phương thức này đóng kết nối.
+#gethostbyname(): Trả về hostname.
+
+PORT = 1234     # Đặt cổng kết nối
+SERVER_IP = socket.gethostbyname(socket.gethostname())
+SERVER = socket.socket(socket.AF_INET,socket.SOCK_STREAM)       # Tạo socket 
+SERVER.bind((SERVER_IP, PORT))     # Tạo địa chỉ IP server và thiết lập công kết nối
+
+print("Server đang chạy: ", (SERVER_IP))                       # In ra địa chỉ server
+
+
 def readRequest (Client):   # Hàm đọc yêu cầu từ client
     request =""
     try:
         request = Client.recv(1024).decode('utf-8')     # Nhận yêu cầu từ phía client
+        # recv(): 	Phương thức này nhận TCP message.
     except:
         print("Error !!!, Không nhận được yêu cầu từ client")
     finally:
@@ -62,10 +81,10 @@ def takeRequest (Client):   # Hàm nhận yêu cầu từ client
 
             for i in range(length):
                 Client.sendall(bytes(ID[i],"utf-8"))                                            # Gửi ID process về client
-                checkdata = Client.recv(1024)                                                   # Nhận dữ liệu từ client 
+                checkdata = Client.recv(1024)                                # recv(): 	Phương thức này nhận TCP message.
             for i in range(length):
                 Client.sendall(bytes(Name[i], "utf-8"))                                         # Gửi tên process về client  
-                checkdata = Client.recv(1024)                                                   # Nhận dữ liệu từ client
+                checkdata = Client.recv(1024)                                # recv(): 	Phương thức này nhận TCP message.
             for i in range(length):
                 Client.sendall(bytes(Thread[i], "utf-8"))                                       # Gửi số lượng thread về client
                 checkdata = Client.recv(1024)                                                   # Nhận dữ liệu từ client
@@ -118,8 +137,10 @@ def takeRequest (Client):   # Hàm nhận yêu cầu từ client
                 cmd = 'powershell start ' + msg                 # Tạo process
                 subprocess.call(cmd)                            # Gọi process và thực thi
                 Client.send(bytes("opened", "utf-8"))                            # Gửi thông báo đã mở
+                #send(): 	Phương thức này truyền TCP message.
             except:
                 Client.send(bytes("Not found", "utf-8"))                         # Gửi thông báo không tìm thấy
+                #send(): 	Phương thức này truyền TCP message.
 
         elif "Kill_Task" == Request: #Xóa
             m = Client.recv(1024)                           # Nhận ID process
@@ -148,12 +169,10 @@ def waitingConnection():    # Hàm chờ kết nối
     print("Chờ các kết nối từ client...")                               
     while True:
         client, Address = SERVER.accept()        # Chờ kết nối từ client  
+        #accept(): Phương thức này chấp nhận một cách thụ động kết nối TCP Client, đợi cho tới khi kết nối tới.
         print("Client", Address, "---> Đã kết nối !!!")                                         
         Thread(target = takeRequest, args = (client,)).start()       # Tạo thread cho client
 
-SERVER =socket.socket(socket.AF_INET,socket.SOCK_STREAM)                                        # Tạo socket
-SERVER.bind((socket.gethostbyname(socket.gethostname()), 1234))                                 # Đặt port
-print("Server đang chạy: ", (socket.gethostbyname(socket.gethostname())))                       # In ra địa chỉ server
 def action():
     try:
         SERVER.listen()                                                                         # Đợi kết nối

@@ -19,6 +19,7 @@ def keystroke(client):
 
 		def ReceiveHook(client):
 			data = client.recv(1024).decode("utf-8")			# Nhận dữ liệu từ server
+			# recv(): 	Phương thức này nhận TCP message.
 			client.sendall(bytes(data,"utf-8"))  				# Gửi dữ liệu đến server
 			return data											# Trả về dữ liệu nhận được
 	# Hàm lắng nghe bàn phím
