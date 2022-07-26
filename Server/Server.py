@@ -5,7 +5,7 @@ import pyautogui
 from tkinter import *
 import Keystroke_SV
 
-def readRequest (Client):
+def readRequest (Client):   # Hàm đọc yêu cầu từ client
     request =""
     try:
         request = Client.recv(1024).decode('utf-8')     # Nhận yêu cầu từ phía client
@@ -14,7 +14,7 @@ def readRequest (Client):
     finally:
         return request
 
-def takeRequest (Client):
+def takeRequest (Client):   # Hàm nhận yêu cầu từ client
     while True:
         Request = readRequest(Client)
         print("====> Yêu cầu từ server: ", Request)
@@ -71,8 +71,9 @@ def takeRequest (Client):
                 checkdata = Client.recv(1024)                                                   # Nhận dữ liệu từ client
 
         elif "AppRunning" == Request:
-            import subprocess                                              
-            cmd = 'powershell "Get-Process |where {$_.mainWindowTItle} |Select-Object id, name, @{Name=\'ThreadCount\';Expression ={$_.Threads.Count}}| format-table'       # Tạo câu lệnh
+            import subprocess   
+            # Lệnh powershell để lấy thông tin của các app đang chạy                                           
+            cmd = 'powershell "Get-Process |where {$_.mainWindowTItle} |Select-Object id, name, @{Name=\'ThreadCount\';Expression ={$_.Threads.Count}}| format-table'       
             openCMD = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)                 # Gọi cmd
             count = 0
             length = 0
@@ -104,7 +105,6 @@ def takeRequest (Client):
                 Client.sendall(bytes(Thread[i], "utf-8"))                                   # Gửi số lượng thread
                 checkdata = Client.recv(1024)                                               # Nhận dữ liệu từ client
         
-
         elif "OpenTask" == Request: #Mở app
             import subprocess
             mode = 0o666            # Thiết lập mode (quyền truy cập tệp bát phân. 0o trong ES6 đại diện hệ bát phân)
@@ -132,26 +132,24 @@ def takeRequest (Client):
             taskkillparam = (taskkillexe, '/F',  '/IM', msg + '.exe')   # Truyền tham số vào taskkill.exe
             taskkillexitcode = call(taskkillparam)          # Gọi taskkill.exe
             Client.send(bytes("Da xoa tac vu", "utf-8"))    # Gửi thông báo đã xóa
-
         
         elif "HookKey" == Request:                                                            # Hook key
             Client.sendall(bytes("Đã nhận", "utf-8"))                                         # Gửi thông báo đã nhận
             Keystroke_SV.Keystroke(Client)                                                    # Gọi hàm Keystroke
 
         elif "Shutdown" == Request:
-            os.system("shutdown /s /t 30")                  # Tắt máy trong vòng 30s
+            os.system("shutdown /s /t 40")            # Tắt máy trong vòng 40s
 
         elif "Exit" == Request:
             Client.sendall(bytes("Đã thoát", "utf-8"))                                        # Gửi thông báo đã thoát
             break                                                                           
 
-def waitingConnection():
+def waitingConnection():    # Hàm chờ kết nối
     print("Chờ các kết nối từ client...")                               
-    
     while True:
-        client, Address = SERVER.accept()                                                       # Chấp nhận kết nối
+        client, Address = SERVER.accept()        # Chờ kết nối từ client  
         print("Client", Address, "---> Đã kết nối !!!")                                         
-        Thread(target = takeRequest, args = (client,)).start()                                  # Tạo thread
+        Thread(target = takeRequest, args = (client,)).start()       # Tạo thread cho client
 
 SERVER =socket.socket(socket.AF_INET,socket.SOCK_STREAM)                                        # Tạo socket
 SERVER.bind((socket.gethostbyname(socket.gethostname()), 1234))                                 # Đặt port
