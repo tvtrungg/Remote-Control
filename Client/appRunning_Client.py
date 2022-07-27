@@ -88,7 +88,7 @@ def application_function(self, client):
 				except:
 					messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")			# Thông báo không tìm thấy chương trình
 
-			Kill_Button = Button(self.screen_KA, text = "Kill", bg = "#FFE4E1",font = "Helvetica 10 bold",padx = 20, command = Kill_Func, bd = 5, activebackground='#F4A460').grid(row=0, column=4, padx=5, pady=5)	# Thêm nút Kill vào cửa sổ
+			Kill_Button = Button(self.screen_KA, text = "Kill", bg = "#FFE4E1",font = "Helvetica 10 bold",padx = 20, command = Kill_Func, bd = 5, activebackground='#877776').grid(row=0, column=4, padx=5, pady=5)	# Thêm nút Kill vào cửa sổ
 	# Hàm khởi động 1 app
 		def Start_App():
 			self.screen_Start = Tk()								# Tạo một cửa sổ mới
