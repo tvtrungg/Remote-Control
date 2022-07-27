@@ -88,7 +88,7 @@ def process_function(self, client):
                 messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")     # Thông báo lỗi
 
         Kill_Button = Button(self.screen_KillTask, bg="#FFE4E1", text="Kill", font="Helvetica 10 bold", padx=20,
-                            command=Kill_Func, bd=5, activebackground='#F4A460').grid(row=0, column=4, padx=5, pady=5)      # Khai báo nút Kill
+                            command=Kill_Func, bd=5, activebackground='#7c6e6c').grid(row=0, column=4, padx=5, pady=5)      # Khai báo nút Kill
 # Hàm khởi động 1 process
     def Start_Process():
         self.screen_Start = Tk()

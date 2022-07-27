@@ -51,7 +51,7 @@ class GUI:
 		self.input_IP.place(relx = 0.501,rely = 0.05)
 		self.input_IP.focus()  # tạo con trỏ nhấp nháy trong ô text
 	# Tạo nút nhấn, khi nhấn nút =>  dữ liệu sẽ được gửi đến server thông qua socket
-		self.connect = Button(self.login,text = "Kết nối", width =20 ,bg = "#A3E4DB",font = "Helvetica 15 bold",command = (lambda : self.Connection_handling(self.input_IP.get())), bd = 5, activebackground='#F4A460')
+		self.connect = Button(self.login,text = "Kết nối", width =20 ,bg = "#A3E4DB",font = "Helvetica 15 bold",command = (lambda : self.Connection_handling(self.input_IP.get())), bd = 5, activebackground='#2f4e5a')
 		self.connect.place(relx = 0.3,rely = 0.18)		# Tọa độ x, y của nút nhấn
 
 		self.Home.mainloop()							# Chạy hệ thống
