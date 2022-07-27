@@ -112,7 +112,7 @@ def application_function(self, client):
 				except:
 					messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")	# Thông báo không tìm thấy chương trình
 
-			Start_Button = Button(self.screen_Start, text = "Start",bg = "#F9BDC0",font = "Helvetica 10 bold", padx = 20, command = PressStart, bd = 5, activebackground='#F4A460').grid(row=0, column=4, padx=5, pady=5)
+			Start_Button = Button(self.screen_Start, text = "Start",bg = "#F9BDC0",font = "Helvetica 10 bold", padx = 20, command = PressStart, bd = 5, activebackground='#836264').grid(row=0, column=4, padx=5, pady=5)
 
 		Start = Button(self.app, text="Start", bg = "#E6E9D0", activebackground='#bec0b1', font = "Helvetica 11 bold",padx = 30, pady = 20, command = Start_App, bd = 5).grid(row = 0, column = 0, padx = 8)
 		Watch = Button(self.app, text = "Watch",bg = "#F9BDC0", activebackground='#7e5a5c',font = "Helvetica 11 bold", padx = 30,  pady = 20, command = Watch_App, bd = 5).grid(row = 0, column = 1, padx = 8)
