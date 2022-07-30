@@ -76,7 +76,10 @@ def process_function(self, client):
         self.Name_input.grid(row=0, column=0, columnspan=3, padx=5, pady=5)          # Đặt Entry
         self.Name_input.insert(END, "Nhập tên")                          # Đặt giá trị mặc định
 
-        def Kill_Func():
+        Kill_Button = Button(self.screen_KillTask, bg="#FFE4E1", text="Kill", font="Helvetica 10 bold", padx=20,
+                            command=Kill_Func, bd=5, activebackground='#7c6e6c').grid(row=0, column=4, padx=5, pady=5)      # Khai báo nút Kill
+
+    def Kill_Func():
             self.AppName = self.Name_input.get()                         # Lấy giá trị của Entry
             client.sendall(bytes("Kill_Task", "utf-8"))                  # Gửi dữ liệu từ client lên server
             try:
@@ -87,8 +90,6 @@ def process_function(self, client):
             except:
                 messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")     # Thông báo lỗi
 
-        Kill_Button = Button(self.screen_KillTask, bg="#FFE4E1", text="Kill", font="Helvetica 10 bold", padx=20,
-                            command=Kill_Func, bd=5, activebackground='#7c6e6c').grid(row=0, column=4, padx=5, pady=5)      # Khai báo nút Kill
 # Hàm khởi động 1 process
     def Start_Process():
         self.screen_Start = Tk()
@@ -99,7 +100,9 @@ def process_function(self, client):
         self.Name_input.grid(row=0, column=0, columnspan=3, padx=5, pady=5)
         self.Name_input.insert(END, "Nhập Tên")                  # Đặt giá trị mặc định
 
-        def PressStart():
+        Start_Button = Button(self.screen_Start, text="Start", bg="#F9BDC0", font="Helvetica 10 bold", padx=20, command=PressStart, bd=5).grid(row=0, column=4, padx=5, pady=5)
+
+    def PressStart():
             self.Name = self.Name_input.get()                    # Lấy giá trị của Entry
             client.sendall(bytes("OpenTask", "utf-8"))          # Gửi dữ liệu từ client lên server
             try:
@@ -108,8 +111,6 @@ def process_function(self, client):
                 messagebox.showinfo("", "Chương trình đã bật")      # Thông báo đã bật chương trình
             except:
                 messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")   # Thông báo lỗi
-
-        Start_Button = Button(self.screen_Start, text="Start", bg="#F9BDC0", font="Helvetica 10 bold", padx=20, command=PressStart, bd=5).grid(row=0, column=4, padx=5, pady=5)
 
     Start = Button(self.process, text="Start", font="Helvetica 10 bold", padx=30, pady=20, command=Start_Process, bd=5, bg = "#E6E9D0", activebackground='#bec0b1').grid(row=0, column=0, padx=8)
     Watch = Button(self.process, text="Watch", font="Helvetica 10 bold", padx=30, pady=20, command=Watch_Processes, bd=5, bg = "#F9BDC0", activebackground='#7e5a5c').grid(row=0, column=1, padx=8)
