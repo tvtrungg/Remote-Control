@@ -99,8 +99,6 @@ def application_function(self, client):
 			self.Name_input.grid(row = 0, column = 0, columnspan = 3, padx = 5, pady = 5)	# Thêm ô nhập vào vào cửa sổ
 			self.Name_input.insert(END,"Nhập Tên")			# Thiết lập giá trị mặc định cho ô nhập
 
-			
-
 			Start_Button = Button(self.screen_Start, text = "Start",bg = "#F9BDC0",font = "Helvetica 10 bold", padx = 20, command = PressStart, bd = 5, activebackground='#836264').grid(row=0, column=4, padx=5, pady=5)
 
 		def PressStart():
