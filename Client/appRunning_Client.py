@@ -75,7 +75,9 @@ def application_function(self, client):
 			self.Name_input.grid(row=0, column=0, columnspan = 3, padx = 5, pady = 5 )		# Thêm ô nhập vào vào cửa sổ
 			self.Name_input.insert(END,"Nhập tên")			# Thiết lập giá trị mặc định cho ô nhập
 
-			def Kill_Func():
+			Kill_Button = Button(self.screen_KA, text = "Kill", bg = "#FFE4E1",font = "Helvetica 10 bold",padx = 20, command = Kill_Func, bd = 5, activebackground='#877776').grid(row=0, column=4, padx=5, pady=5)	# Thêm nút Kill vào cửa sổ
+	
+		def Kill_Func():
 				self.AppName = self.Name_input.get()										# Lấy giá trị từ ô nhập
 				client.sendall(bytes("Kill_Task","utf-8"))								# Gửi dữ liệu từ server
 				try:
@@ -87,8 +89,6 @@ def application_function(self, client):
 						messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")		# Thông báo không tìm thấy chương trình
 				except:
 					messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")			# Thông báo không tìm thấy chương trình
-
-			Kill_Button = Button(self.screen_KA, text = "Kill", bg = "#FFE4E1",font = "Helvetica 10 bold",padx = 20, command = Kill_Func, bd = 5, activebackground='#877776').grid(row=0, column=4, padx=5, pady=5)	# Thêm nút Kill vào cửa sổ
 	# Hàm khởi động 1 app
 		def Start_App():
 			self.screen_Start = Tk()								# Tạo một cửa sổ mới
@@ -99,7 +99,9 @@ def application_function(self, client):
 			self.Name_input.grid(row = 0, column = 0, columnspan = 3, padx = 5, pady = 5)	# Thêm ô nhập vào vào cửa sổ
 			self.Name_input.insert(END,"Nhập Tên")			# Thiết lập giá trị mặc định cho ô nhập
 
-			def PressStart():
+			Start_Button = Button(self.screen_Start, text = "Start",bg = "#F9BDC0",font = "Helvetica 10 bold", padx = 20, command = PressStart, bd = 5, activebackground='#836264').grid(row=0, column=4, padx=5, pady=5)
+
+		def PressStart():
 				self.Name = self.Name_input.get()									# Lấy giá trị từ ô nhập
 				client.sendall(bytes("OpenTask","utf-8"))							# Gửi dữ liệu từ server
 				try:
@@ -111,8 +113,6 @@ def application_function(self, client):
 						messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")		# Thông báo không tìm thấy chương trình
 				except:
 					messagebox.showinfo("Error !!!", "Không tìm thấy chương trình")	# Thông báo không tìm thấy chương trình
-
-			Start_Button = Button(self.screen_Start, text = "Start",bg = "#F9BDC0",font = "Helvetica 10 bold", padx = 20, command = PressStart, bd = 5, activebackground='#836264').grid(row=0, column=4, padx=5, pady=5)
 
 		Start = Button(self.app, text="Start", bg = "#E6E9D0", activebackground='#bec0b1', font = "Helvetica 11 bold",padx = 30, pady = 20, command = Start_App, bd = 5).grid(row = 0, column = 0, padx = 8)
 		Watch = Button(self.app, text = "Watch",bg = "#F9BDC0", activebackground='#7e5a5c',font = "Helvetica 11 bold", padx = 30,  pady = 20, command = Watch_App, bd = 5).grid(row = 0, column = 1, padx = 8)
