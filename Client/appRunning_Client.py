@@ -21,7 +21,7 @@ def application_function(self, client):
 			self.Name = [''] * 1000 			#Mảng lưu tên app
 			self.Thread = [''] * 1000 		#Mảng lưu luồng
 			try:
-				client.sendall(bytes("AppRunning","utf-8"))			# Gửi yêu cầu lấy danh sách app đang chạy
+				client.sendall(bytes("Watch_AppRunning","utf-8"))			# Gửi yêu cầu lấy danh sách app đang chạy
 			except:
 				messagebox.showinfo("Error !!!", "Lỗi kết nối")		# Thông báo lỗi kết nối
 				self.app.destroy()									# Đóng app

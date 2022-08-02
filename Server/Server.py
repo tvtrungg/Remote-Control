@@ -19,11 +19,9 @@ PORT = 1234     # Đặt cổng kết nối
 SERVER_IP = socket.gethostbyname(socket.gethostname())
 SERVER = socket.socket(socket.AF_INET,socket.SOCK_STREAM)       # Tạo socket 
 SERVER.bind((SERVER_IP, PORT))     # Tạo địa chỉ IP server và thiết lập công kết nối
-
 print("Server đang chạy: ", (SERVER_IP))                       # In ra địa chỉ server
 
-
-def readRequest (Client):   # Hàm đọc yêu cầu từ client
+def read_Request (Client):   # Hàm đọc yêu cầu từ client
     request =""
     try:
         request = Client.recv(1024).decode('utf-8')     # Nhận yêu cầu từ phía client
@@ -33,9 +31,9 @@ def readRequest (Client):   # Hàm đọc yêu cầu từ client
     finally:
         return request
 
-def takeRequest (Client):   # Hàm nhận yêu cầu từ client
+def take_Request (Client):   # Hàm nhận yêu cầu từ client
     while True:
-        Request = readRequest(Client)
+        Request = read_Request(Client)
         print("====> Yêu cầu từ server: ", Request)
         if not Request:
             Client.close()
@@ -89,7 +87,7 @@ def takeRequest (Client):   # Hàm nhận yêu cầu từ client
                 Client.sendall(bytes(Thread[i], "utf-8"))                                       # Gửi số lượng thread về client
                 checkdata = Client.recv(1024)                                                   # Nhận dữ liệu từ client
 
-        elif "AppRunning" == Request:
+        elif "Watch_AppRunning" == Request:
             import subprocess   
             # Lệnh powershell để lấy thông tin của các app đang chạy                                           
             cmd = 'powershell "Get-Process |where {$_.mainWindowTItle} |Select-Object id, name, @{Name=\'ThreadCount\';Expression ={$_.Threads.Count}}| format-table'       
@@ -165,18 +163,18 @@ def takeRequest (Client):   # Hàm nhận yêu cầu từ client
             Client.sendall(bytes("Đã thoát", "utf-8"))                                        # Gửi thông báo đã thoát
             break                                                                           
 
-def waitingConnection():    # Hàm chờ kết nối
+def waiting():    # Hàm chờ kết nối
     print("Chờ các kết nối từ client...")                               
     while True:
         client, Address = SERVER.accept()        # Chờ kết nối từ client  
         #accept(): Phương thức này chấp nhận một cách thụ động kết nối TCP Client, đợi cho tới khi kết nối tới.
         print("Client", Address, "---> Đã kết nối !!!")                                         
-        Thread(target = takeRequest, args = (client,)).start()       # Tạo thread cho client
+        Thread(target = take_Request, args = (client,)).start()       # Tạo thread cho client
 
-def action():
+def listenAndclose():
     try:
         SERVER.listen()                                                                         # Đợi kết nối
-        ACCEPT_THREAD = Thread(target = waitingConnection())                                    # Tạo thread
+        ACCEPT_THREAD = Thread(target = waiting())                                    # Tạo thread
         ACCEPT_THREAD.start()       #Khởi động thread                                           
         ACCEPT_THREAD.join()        #Đợi cho thread kết thúc
     except:
@@ -184,11 +182,10 @@ def action():
     finally:
         SERVER.close()          # Đóng socket
 
-def main():
+def interface():
     top = Tk()                                                           # Tạo cửa sổ
     top.title("Server Connection")                                       # Đặt tiêu đề
     top.geometry("160x65")                                               # Đặt kích thước
-    top.configure(background = "white")                                  # Đặt màu nền
     btn1= PhotoImage(file='./img/button/anh2a.png')                      # Đặt hình ảnh
     btn2= PhotoImage(file='./img/button/anh1a.png')
     def on_enter(event):
@@ -196,7 +193,7 @@ def main():
     def on_leave(event):
         top.button.config(image=btn1)   # Hình hiển thị khi hover
 
-    top.button = Button(top, image=btn1,bg="#fff", command = action, relief="flat", bd=0, highlightthickness=0, activebackground="#f7f7f7")
+    top.button = Button(top, image=btn1,bg="#fff", command = listenAndclose, relief="flat", bd=0, highlightthickness=0, activebackground="#f7f7f7")
     top.button.pack(pady=5, padx=5, expand=True)                     # Đặt kích thước và vị trí
     
     top.button.bind("<Enter>", on_enter)        #Đặt sự kiện khi chuột đến button
@@ -204,5 +201,5 @@ def main():
     top.mainloop()
 
 if __name__ == "__main__":          # Chạy chương trình
-    main()
+    interface()
    

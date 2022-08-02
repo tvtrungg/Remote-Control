@@ -23,7 +23,7 @@ import screenCapture_Client			# screenCapture.py
 #close()        : Phương thức này đóng kết nối.
 #gethostbyname(): Trả về hostname.
 
-class GUI:
+class Main:
 	def __init__(self):
 		self.Home = Tk()
 		self.Home.withdraw()
@@ -38,7 +38,6 @@ class GUI:
 		self.background= PhotoImage(file='./img/button/background.png')
 		self.mylabel = Label(self.login, image=self.background)
 		self.mylabel.place(x=0, y=0, relwidth=1, relheight=1)
-		
 	# Tạo label
 		self.labelIP = Label(self.login, text = "Nhập địa chỉ IP để tiếp tục:", compound="center",bg ="#FFFEEC",font = "Helvetica 15 bold")
 		self.labelIP.place(relx = 0.05,rely = 0.05)
@@ -115,7 +114,7 @@ class GUI:
 		try:
 			Client.send(bytes("Shutdown",'utf-8'))		# Gửi thông điệp "shut down" đến server, server sẽ tự động tắt máy trong 30s
 			#send(): 	Phương thức này truyền TCP message.
-			messagebox.showinfo("Success", "Máy tính sẽ tắt sau 30s")	# Thông báo thành công
+			messagebox.showinfo("Success", "Máy tính sẽ tắt sau 40s")	# Thông báo thành công
 		except:
 			messagebox.showinfo("Error !!!", "Lỗi kết nối ")	# Nếu lỗi kết nối thì thông báo lỗi
 
@@ -129,7 +128,6 @@ class GUI:
 		self.Home.destroy()						# Đóng cửa sổ
 
 # Hàm xử lý kết nối giữa server - Client
-	
 	def Connection_handling(self, HOST):
 		PORT = 1234						# Đặt cổng kết nối
 		Client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)       # Tạo socket 
@@ -146,4 +144,4 @@ class GUI:
 
 
 if __name__ == "__main__":		# Nếu chương trình được chạy tự động thì sẽ chạy hàm main
-	GUI()						# Gọi hàm GUI để hiển thị các nút điều khiển
+	Main()						# Gọi hàm Main để hiển thị các nút điều khiển
