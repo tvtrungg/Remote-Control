@@ -137,7 +137,7 @@ class Main:
 			# Client.send(bytes("Success", 'utf-8'))		# Gửi thông điệp thành công
 			messagebox.showinfo("Successful !!!", "Kết nối server thành công")		#Nếu đúng sẽ hiển thị thông báo thành công
 			rcv = Thread(target=self.Controller(Client))				# Sau đó gọi đến hàm Controller để hiển thị các nút điều khiển
-			rcv.start()
+			rcv.start()				# Khởi động luồng 	
 		except:     
 			messagebox.showinfo(" Error!!!", "Không thể kết nối đến server")  # Nếu lỗi thì in ra màn hình, sau đó đóng kết nối client
 			Client.close()

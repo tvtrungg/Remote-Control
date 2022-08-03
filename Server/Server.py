@@ -1,7 +1,7 @@
 from threading import Thread
 import socket       # thư viện socket
-import os
-import pyautogui
+import os           # các chức năng được sử dụng để tương tác với hệ điều hành và cũng có được thông tin liên quan về nó
+import pyautogui    # hỗ trợ đa nền tảng để quản lý hoạt động của chuột, bàn phím, chụp ảnh màn hình, tự động kiểm tra GUI,... thông qua mã để cho phép tự động hóa các tác vụ
 from tkinter import *
 import Keystroke_SV
 
@@ -55,6 +55,12 @@ def take_Request (Client):   # Hàm nhận yêu cầu từ client
         elif "Watch_ProcessRunning" == Request:     
             import subprocess
             # Lệnh powershell để lấy thông tin của các process đang chạy
+            # powershell -> chạy lệnh trên powershell
+            # Get-Process -> lấy thông tin của các process
+            # Select-Object id, name -> lựa chọn các thông tin cần lấy
+            # @{Name=\'ThreadCount\'} -> tên của thuộc tính
+            # Expression ={$_.Threads.Count}} -> lấy giá trị của thuộc tính
+            # format-table -> định dạng của dữ liệu (dạng bảng)
             cmd = 'powershell "Get-Process |Select-Object id, name, @{Name=\'ThreadCount\';Expression ={$_.Threads.Count}}| format-table'   
             ProccessProc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)            # Tạo process
             count = 0                                                               # Đếm số lượng process
@@ -89,7 +95,10 @@ def take_Request (Client):   # Hàm nhận yêu cầu từ client
 
         elif "Watch_AppRunning" == Request:
             import subprocess   
-            # Lệnh powershell để lấy thông tin của các app đang chạy                                           
+            # Lệnh powershell để lấy thông tin của các app đang chạy     
+            # Sự khác nhau giữa Watch_ProcessRunning và Watch_AppRunning là:
+                # where {$_.mainWindowTItle} -> lấy tên của app 
+                # -> Ở Process thì không cần lệnh này                                    
             cmd = 'powershell "Get-Process |where {$_.mainWindowTItle} |Select-Object id, name, @{Name=\'ThreadCount\';Expression ={$_.Threads.Count}}| format-table'       
             openCMD = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)                 # Gọi cmd
             count = 0
@@ -173,8 +182,8 @@ def waiting():    # Hàm chờ kết nối
 
 def listenAndclose():
     try:
-        SERVER.listen()                                                                         # Đợi kết nối
-        ACCEPT_THREAD = Thread(target = waiting())                                    # Tạo thread
+        SERVER.listen()        # Đợi kết nối
+        ACCEPT_THREAD = Thread(target = waiting())        # Tạo thread
         ACCEPT_THREAD.start()       #Khởi động thread                                           
         ACCEPT_THREAD.join()        #Đợi cho thread kết thúc
     except:
