@@ -55,7 +55,7 @@ class Main:
 
 		self.Home.mainloop()							# Chạy hệ thống
 		
-	def Controller(self, Client): # Các hộp thoại chức năng điều khiển
+	def Controller(self, Client): # Hộp thoại các chức năng điều khiển
 	# Process Running
 		self.btnProcess= PhotoImage(file='./img/button/processRunning.png')                      # Đặt hình ảnh
 		self.process = Button(self.login, image = self.btnProcess, command =(lambda : self.process_function(Client)), bd = 0, bg= "#fff")
@@ -78,7 +78,7 @@ class Main:
 		self.shut.place(relx = 0.245, rely = 0.58)
 	# Thoát
 		self.btnExist= PhotoImage(file='./img/button/exit.png')                      # Đặt hình ảnh
-		self.escape = Button(self.login, image = self.btnExist, command = (lambda : self.exist(Client)), bd = 0,bg = "#fff")
+		self.escape = Button(self.login, image = self.btnExist, command = (lambda : self.Exit(Client)), bd = 0,bg = "#fff")
 		self.escape.place(relx = 0.505, rely = 0.58)      
 	
 #Hàm chụp ảnh màn hình
@@ -119,7 +119,7 @@ class Main:
 			messagebox.showinfo("Error !!!", "Lỗi kết nối ")	# Nếu lỗi kết nối thì thông báo lỗi
 
 # Hàm thoát	chương trình	
-	def exist(self, Client):
+	def Exit(self, Client):
 		try:
 			Client.send(bytes("Exit", 'utf-8'))			# Gửi thông điệp để thoát khỏi chương trình 
 		except:
@@ -127,7 +127,7 @@ class Main:
 		Client.close()							# Đóng kết nối
 		self.Home.destroy()						# Đóng cửa sổ
 
-# Hàm xử lý kết nối giữa server - Client
+# Hàm xử lý kết nối giữa Client - Server
 	def Connection_handling(self, HOST):
 		PORT = 1234						# Đặt cổng kết nối
 		Client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)       # Tạo socket 
